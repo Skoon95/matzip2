@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>맛을 담다 - 맛집</title>
+    <link rel="stylesheet" th:href="@{/resources/stylesheets/index.css}">
+    <link rel="shortcut icon" th:href="@{/resources/images/shortcut_icon.png}">
+    <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b6462c91e8ee8b64eee4906edc27e191&libraries=services,clusterer,drawing"></script>
+    <script defer th:src="@{/resources/scripts/index.js}"></script>
+</head>
+<body>
+<div id="loading" class="visible">
+    <img alt="" class="logo" th:src="@{/resources/images/shortcut_icon.png}">
+</div>
+<div id="cover">
+
+</div>
+<ul id="menu">
+    <li class="item logo-container">
+        <img class="logo" alt="" th:src="@{/resources/images/shortcut_icon.png}">
+    </li>
+    <li class="item link selected">
+        <img alt="" class="icon" th:src="@{/resources/images/menu-main.png}">
+        <span class="text">맛집</span>
+    </li>
+    <li class="item link">
+        <img alt="" class="icon" th:src="@{/resources/images/menu-favorite.png}">
+        <span class="text">즐겨찾기</span>
+    </li>
+    <li class="stretch"></li>
+    <li class="item link" data-method="showLogin">
+        <img alt="" class="icon"
+             th:src="@{/resources/images/menu-login.png}">
+        <span class="text">로그인</span>
+    </li>
+    <li class="item link" data-method="logout">
+        <img alt="" class="icon"
+             th:src="@{/resources/images/menu-logout.png}">
+        <span class="text">로그아웃</span>
+    </li>
+    <li class="item link">
+        <img alt="" class="icon"
+             th:src="@{/resources/images/menu-my.png}">
+        <span class="text">마이페이지</span>
+    </li>
+</ul>
+<section id="list">
+    <form class="search-form">
+        <label class="label">
+            <img alt="" class="icon" th:src="@{/resources/images/list.search-form.icon.png}">
+            <input class="input" maxlength="50" placeholder="식당 검색" type="text">
+        </label>
+    </form>
+    <div class="address-container">
+        <span class="text gu" rel="addressGu">중구</span>
+        <span class="text dong" rel="addressDong">성내1동</span>
+    </div>
+
+    <ul class="list">
+        <li class="item">
+            <div class="spec-container">
+                <div class="name-container">
+                    <span class="name">용정반점</span>
+                    <span class="category">중화음식</span>
+                </div>
+                <div class="op-container">
+                    <span class="op-flag">영업 중</span>
+                    <span class="op-time">20:00에 영업 종료</span>
+                </div>
+                <div class="address-container">
+                    <span class="address">대구 중구 덕산동</span>
+                </div>
+            </div>
+            <div class="image-container">
+                <img alt="" class="image"
+                     src="https://mblogthumb-phinf.pstatic.net/MjAxODEyMDhfMTc0/MDAxNTQ0MjM4MTQ5MDQ2.AMnM0wh58PwdAPC4Wk5k1IGlBD6eH1loUgSRorMiFl0g.eHQmfl0gLlfiN4i-FjfA8XJI2aldGUaImxlAaYyyxi8g.JPEG.engh1698/2018-12-06-12-50-32.jpg?type=w800">
+                <span class="count">4</span>
+            </div>
+        </li>
+        <li class="item">
+            <div class="spec-container">
+                <div class="name-container">
+                    <span class="name">용정반점</span>
+                    <span class="category">중화음식</span>
+                </div>
+                <div class="op-container">
+                    <span class="op-flag">영업 중</span>
+                    <span class="op-time">20:00에 영업 종료</span>
+                </div>
+                <div class="address-container">
+                    <span class="address">대구 중구 덕산동</span>
+                </div>
+            </div>
+            <div class="image-container">
+                <img alt="" class="image"
+                     src="https://mblogthumb-phinf.pstatic.net/MjAxODEyMDhfMTc0/MDAxNTQ0MjM4MTQ5MDQ2.AMnM0wh58PwdAPC4Wk5k1IGlBD6eH1loUgSRorMiFl0g.eHQmfl0gLlfiN4i-FjfA8XJI2aldGUaImxlAaYyyxi8g.JPEG.engh1698/2018-12-06-12-50-32.jpg?type=w800">
+                <span class="count">4</span>
+            </div>
+        </li>
+        <li class="item">
+            <div class="spec-container">
+                <div class="name-container">
+                    <span class="name">용정반점</span>
+                    <span class="category">중화음식</span>
+                </div>
+                <div class="op-container">
+                    <span class="op-flag">영업 중</span>
+                    <span class="op-time">20:00에 영업 종료</span>
+                </div>
+                <div class="address-container">
+                    <span class="address">대구 중구 덕산동</span>
+                </div>
+            </div>
+            <div class="image-container">
+                <img alt="" class="image"
+                     src="https://mblogthumb-phinf.pstatic.net/MjAxODEyMDhfMTc0/MDAxNTQ0MjM4MTQ5MDQ2.AMnM0wh58PwdAPC4Wk5k1IGlBD6eH1loUgSRorMiFl0g.eHQmfl0gLlfiN4i-FjfA8XJI2aldGUaImxlAaYyyxi8g.JPEG.engh1698/2018-12-06-12-50-32.jpg?type=w800">
+                <span class="count">4</span>
+            </div>
+        </li>
+        <li class="item">
+            <div class="spec-container">
+                <div class="name-container">
+                    <span class="name">용정반점</span>
+                    <span class="category">중화음식</span>
+                </div>
+                <div class="op-container">
+                    <span class="op-flag">영업 중</span>
+                    <span class="op-time">20:00에 영업 종료</span>
+                </div>
+                <div class="address-container">
+                    <span class="address">대구 중구 덕산동</span>
+                </div>
+            </div>
+            <div class="image-container">
+                <img alt="" class="image"
+                     src="https://mblogthumb-phinf.pstatic.net/MjAxODEyMDhfMTc0/MDAxNTQ0MjM4MTQ5MDQ2.AMnM0wh58PwdAPC4Wk5k1IGlBD6eH1loUgSRorMiFl0g.eHQmfl0gLlfiN4i-FjfA8XJI2aldGUaImxlAaYyyxi8g.JPEG.engh1698/2018-12-06-12-50-32.jpg?type=w800">
+                <span class="count">4</span>
+            </div>
+        </li>
+        <li class="item">
+            <div class="spec-container">
+                <div class="name-container">
+                    <span class="name">용정반점</span>
+                    <span class="category">중화음식</span>
+                </div>
+                <div class="op-container">
+                    <span class="op-flag">영업 중</span>
+                    <span class="op-time">20:00에 영업 종료</span>
+                </div>
+                <div class="address-container">
+                    <span class="address">대구 중구 덕산동</span>
+                </div>
+            </div>
+            <div class="image-container">
+                <img alt="" class="image"
+                     src="https://mblogthumb-phinf.pstatic.net/MjAxODEyMDhfMTc0/MDAxNTQ0MjM4MTQ5MDQ2.AMnM0wh58PwdAPC4Wk5k1IGlBD6eH1loUgSRorMiFl0g.eHQmfl0gLlfiN4i-FjfA8XJI2aldGUaImxlAaYyyxi8g.JPEG.engh1698/2018-12-06-12-50-32.jpg?type=w800">
+                <span class="count">4</span>
+            </div>
+        </li>
+        <li class="item">
+            <div class="spec-container">
+                <div class="name-container">
+                    <span class="name">용정반점</span>
+                    <span class="category">중화음식</span>
+                </div>
+                <div class="op-container">
+                    <span class="op-flag">영업 중</span>
+                    <span class="op-time">20:00에 영업 종료</span>
+                </div>
+                <div class="address-container">
+                    <span class="address">대구 중구 덕산동</span>
+                </div>
+            </div>
+            <div class="image-container">
+                <img alt="" class="image"
+                     src="https://mblogthumb-phinf.pstatic.net/MjAxODEyMDhfMTc0/MDAxNTQ0MjM4MTQ5MDQ2.AMnM0wh58PwdAPC4Wk5k1IGlBD6eH1loUgSRorMiFl0g.eHQmfl0gLlfiN4i-FjfA8XJI2aldGUaImxlAaYyyxi8g.JPEG.engh1698/2018-12-06-12-50-32.jpg?type=w800">
+                <span class="count">4</span>
+            </div>
+        </li>
+        <li class="item">
+            <div class="spec-container">
+                <div class="name-container">
+                    <span class="name">용정반점</span>
+                    <span class="category">중화음식</span>
+                </div>
+                <div class="op-container">
+                    <span class="op-flag">영업 중</span>
+                    <span class="op-time">20:00에 영업 종료</span>
+                </div>
+                <div class="address-container">
+                    <span class="address">대구 중구 덕산동</span>
+                </div>
+            </div>
+            <div class="image-container">
+                <img alt="" class="image"
+                     src="https://mblogthumb-phinf.pstatic.net/MjAxODEyMDhfMTc0/MDAxNTQ0MjM4MTQ5MDQ2.AMnM0wh58PwdAPC4Wk5k1IGlBD6eH1loUgSRorMiFl0g.eHQmfl0gLlfiN4i-FjfA8XJI2aldGUaImxlAaYyyxi8g.JPEG.engh1698/2018-12-06-12-50-32.jpg?type=w800">
+                <span class="count">4</span>
+            </div>
+        </li>
+        <li class="item">
+            <div class="spec-container">
+                <div class="name-container">
+                    <span class="name">용정반점</span>
+                    <span class="category">중화음식</span>
+                </div>
+                <div class="op-container">
+                    <span class="op-flag">영업 중</span>
+                    <span class="op-time">20:00에 영업 종료</span>
+                </div>
+                <div class="address-container">
+                    <span class="address">대구 중구 덕산동</span>
+                </div>
+            </div>
+            <div class="image-container">
+                <img alt="" class="image"
+                     src="https://mblogthumb-phinf.pstatic.net/MjAxODEyMDhfMTc0/MDAxNTQ0MjM4MTQ5MDQ2.AMnM0wh58PwdAPC4Wk5k1IGlBD6eH1loUgSRorMiFl0g.eHQmfl0gLlfiN4i-FjfA8XJI2aldGUaImxlAaYyyxi8g.JPEG.engh1698/2018-12-06-12-50-32.jpg?type=w800">
+                <span class="count">4</span>
+            </div>
+        </li>
+        <li class="item">
+            <div class="spec-container">
+                <div class="name-container">
+                    <span class="name">용정반점</span>
+                    <span class="category">중화음식</span>
+                </div>
+                <div class="op-container">
+                    <span class="op-flag">영업 중</span>
+                    <span class="op-time">20:00에 영업 종료</span>
+                </div>
+                <div class="address-container">
+                    <span class="address">대구 중구 덕산동</span>
+                </div>
+            </div>
+            <div class="image-container">
+                <img alt="" class="image"
+                     src="https://mblogthumb-phinf.pstatic.net/MjAxODEyMDhfMTc0/MDAxNTQ0MjM4MTQ5MDQ2.AMnM0wh58PwdAPC4Wk5k1IGlBD6eH1loUgSRorMiFl0g.eHQmfl0gLlfiN4i-FjfA8XJI2aldGUaImxlAaYyyxi8g.JPEG.engh1698/2018-12-06-12-50-32.jpg?type=w800">
+                <span class="count">4</span>
+            </div>
+        </li>
+        <li class="item">
+            <div class="spec-container">
+                <div class="name-container">
+                    <span class="name">용정반점</span>
+                    <span class="category">중화음식</span>
+                </div>
+                <div class="op-container">
+                    <span class="op-flag">영업 중</span>
+                    <span class="op-time">20:00에 영업 종료</span>
+                </div>
+                <div class="address-container">
+                    <span class="address">대구 중구 덕산동</span>
+                </div>
+            </div>
+            <div class="image-container">
+                <img alt="" class="image"
+                     src="https://mblogthumb-phinf.pstatic.net/MjAxODEyMDhfMTc0/MDAxNTQ0MjM4MTQ5MDQ2.AMnM0wh58PwdAPC4Wk5k1IGlBD6eH1loUgSRorMiFl0g.eHQmfl0gLlfiN4i-FjfA8XJI2aldGUaImxlAaYyyxi8g.JPEG.engh1698/2018-12-06-12-50-32.jpg?type=w800">
+                <span class="count">4</span>
+            </div>
+        </li>
+        <li class="item">
+            <div class="spec-container">
+                <div class="name-container">
+                    <span class="name">용정반점</span>
+                    <span class="category">중화음식</span>
+                </div>
+                <div class="op-container">
+                    <span class="op-flag">영업 중</span>
+                    <span class="op-time">20:00에 영업 종료</span>
+                </div>
+                <div class="address-container">
+                    <span class="address">대구 중구 덕산동</span>
+                </div>
+            </div>
+            <div class="image-container">
+                <img alt="" class="image"
+                     src="https://mblogthumb-phinf.pstatic.net/MjAxODEyMDhfMTc0/MDAxNTQ0MjM4MTQ5MDQ2.AMnM0wh58PwdAPC4Wk5k1IGlBD6eH1loUgSRorMiFl0g.eHQmfl0gLlfiN4i-FjfA8XJI2aldGUaImxlAaYyyxi8g.JPEG.engh1698/2018-12-06-12-50-32.jpg?type=w800">
+                <span class="count">4</span>
+            </div>
+        </li>
+        <li class="item">
+            <div class="spec-container">
+                <div class="name-container">
+                    <span class="name">용정반점</span>
+                    <span class="category">중화음식</span>
+                </div>
+                <div class="op-container">
+                    <span class="op-flag">영업 중</span>
+                    <span class="op-time">20:00에 영업 종료</span>
+                </div>
+                <div class="address-container">
+                    <span class="address">대구 중구 덕산동</span>
+                </div>
+            </div>
+            <div class="image-container">
+                <img alt="" class="image"
+                     src="https://mblogthumb-phinf.pstatic.net/MjAxODEyMDhfMTc0/MDAxNTQ0MjM4MTQ5MDQ2.AMnM0wh58PwdAPC4Wk5k1IGlBD6eH1loUgSRorMiFl0g.eHQmfl0gLlfiN4i-FjfA8XJI2aldGUaImxlAaYyyxi8g.JPEG.engh1698/2018-12-06-12-50-32.jpg?type=w800">
+                <span class="count">4</span>
+            </div>
+        </li>
+    </ul>
+
+</section>
+<section id="detail">디테일 자리</section>
+<section id="map">지도 자리</section>
+</body>
+</html>
