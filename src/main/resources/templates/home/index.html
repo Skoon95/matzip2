@@ -15,9 +15,118 @@
 <div id="loading" class="visible">
     <img alt="" class="logo" th:src="@{/resources/images/shortcut_icon.png}">
 </div>
-<div id="cover">
-
-</div>
+<div id="cover"></div>
+<form id="loginForm">
+    <h2 class="title">로그인</h2>
+    <label class="label">
+        <input class="_object-input input" maxlength="50" name="email" placeholder="이메일 주소" type="email">
+    </label>
+    <span class="warning email" rel="emailWarning">올바른 이메일을 입력해 주세요.</span>
+    <label class="label">
+        <input class="_object-input input" maxlength="50" name="password" placeholder="비밀번호" type="password">
+    </label>
+    <span class="warning password" rel="passwordWarning">올바른 비밀번호를 입력해 주세요.</span>
+    <span class="warning Login" rel="loginWarning">이메일 혹은 비밀번호가 올바르지 않습니다.</span>
+    <label class="_object-check-wrapper">
+        <input class="_check-input" name="rememberEmail" type="checkbox">
+        <span class="_check-toggle"></span>
+        <span class="_check-text">이메일을 기억합니다.</span>
+    </label>
+    <div class="button-container">
+        <input class="_object-button" name="cancelButton" type="button" value="취소" data-method="hideLogin">
+        <input class="_object-button _color-concept" type="submit" value="로그인">
+    </div>
+    <ul class="menu">
+        <li class="item">
+            <span class="text">아직 계정이 없으신가요?</span>
+            <a href="#" class="link" data-method="showRegister">회원가입</a>
+        </li>
+        <li class="item">
+            <span class="text">이메일 혹은 비밀번호를 분실하셨나요?</span>
+            <a href="#" class="link">계정 복구</a>
+        </li>
+    </ul>
+</form>
+<form id="registerForm" class="visible step-2">
+    <section class="section step-1">
+        <div class="title-container">
+            <h2 class="title">회원가입</h2>
+            <h3 class="subtitle">서비스 이용약관 및 개인정보 처리방침</h3>
+        </div>
+        <div class="content-container">
+            <label class="label term-container">
+                <textarea readonly class="_object-input term">
+                    서비스 이용약관
+                </textarea>
+            </label>
+            <label class="_object-check-wrapper">
+                <input class="_check-input" name="agreeServiceTerm" type="checkbox">
+                <span class="_check-toggle"></span>
+                <span class="text">위 서비스 이용약관을 읽어보았고 이해하였으며 동의합니다.</span>
+            </label>
+            <label class="label term-container">
+                <textarea readonly class="_object-input term">
+                    개인정보 처리방침
+                </textarea>
+            </label>
+            <label class="_object-check-wrapper">
+                <input class="_check-input" name="agreePrivacyTerm" type="checkbox">
+                <span class="_check-toggle"></span>
+                <span class="text">위 개인정보 처리방침을 읽어보았고 이해하였으며 동의합니다.</span>
+            </label>
+            <span class="warning term" rel="termWarning"></span>
+        </div>
+        <div class="button-container">
+            <input class="_object-button" name="cancel" type="button" value="취소" data-method="hideRegister">
+            <input class="_object-button _color-concept" type="submit" value="다음">
+        </div>
+    </section>
+    <section class="section step-2">
+        <div class="title-container">
+            <h2 class="title">회원가입</h2>
+            <h3 class="subtitle">개인정보 입력</h3>
+        </div>
+        <div class="content-container">
+            <label class="label">
+                <input class="_object-input" maxlength="50" name="email" placeholder="이메일" type="email">
+            </label>
+            <span class="warning email" rel="emailWarning"></span>
+            <label class="label">
+                <input class="_object-input" maxlength="50" name="password" type="password" placeholder="비밀번호(8자 이상 50자 이하)">
+            </label>
+            <label class="label">
+                <input class="_object-input" maxlength="50" name="passwordCheck" type="password" placeholder="비밀번호 확인">
+            </label>
+            <span class="warning password" rel="passwordWarning"></span>
+            <label class="label">
+                <input class="_object-input" maxlength="10" name="nickname" placeholder="별명 (2자 이상 10자 이하 완성 한글)" type="text">
+            </label>
+            <span class="warning nickname" rel="nicknameWarning"></span>
+            <label class="label">
+                <input class="_object-input" maxlength="12" placeholder="연락처 ('-' 없이 입력)" type="text">
+                <input class="_object-button" name="contactSend" type="button" value="인증번호 전송">
+            </label>
+            <label class="label">
+                <input disabled class="_object-input" maxlength="6" placeholder="인증번호" type="text">
+                <input disabled class="_object-button" name="contactVerify" type="button" value="인증번호 확인">
+            </label>
+            <span class="warning contact" rel="contactWarning"></span>
+        </div>
+        <div class="button-container">
+            <input class="_object-button" name="cancel" type="button" value="취소" data-method="hideRegister">
+            <input class="_object-button _color-concept" type="submit" value="다음">
+        </div>
+    </section>
+    <section class="section step-3">
+        <div class="title-container">
+            <h2 class="title">회원가입</h2>
+            <h3 class="subtitle">회원가입 완료</h3>
+        </div>
+        <div class="button-container">
+            <input class="_object-button _color-concept" type="submit" value="완료">
+        </div>
+    </section>
+</form>
 <ul id="menu">
     <li class="item logo-container">
         <img class="logo" alt="" th:src="@{/resources/images/shortcut_icon.png}">

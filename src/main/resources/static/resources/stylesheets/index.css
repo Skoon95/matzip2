@@ -7,7 +7,22 @@ html{
     font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard Variable", Pretendard, Roboto, "Noto Sans KR", "Segoe UI", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
 }
 
-input{
+a:link, a:visited{
+    color: #0288d1;
+    text-decoration: none;
+}
+
+a:link:hover, a:visited:hover{
+    text-decoration: underline;
+}
+
+h1,h2,h3,h4,h5,h6 {
+    font: inherit;
+    margin-block: unset;
+    margin-inline: unset;
+}
+
+input, select , textarea{
     appearance: none;
     background-color: inherit;
     border: unset;
@@ -41,6 +56,89 @@ body {
     flex-direction: row;
     justify-content: flex-start;
 }
+
+._object-input {
+    background-color: #fafafa;
+    border:  0.0625rem solid #e0e0e0;
+    border-radius: 0.25rem;
+    color: #818181;
+    font: inherit;
+    padding: 0.625rem 0.875rem;
+}
+
+._object-input:hover{
+    border: 0.0625rem solid #d0d0d0;
+    color: #515151;
+}
+
+._object-input:active,._object-input:focus{
+    border: 0.0625rem solid #c0c0c0;
+    color: #212121;
+}
+
+._object-input._invalid{
+    border:  0.0625rem solid #ef5350;
+}
+
+._object-input:disabled{
+    background-color: #eeeeee;
+    border: 0.0625rem solid #e0e0e0;
+}
+
+._object-button{
+    background-color: #e0e0e0;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    padding: 0.625rem 0.875rem;
+}
+
+._object-button._color-concept{
+    background-color: #ffc72b;
+}
+
+._object-button:hover{
+    filter: brightness(95%);
+}
+
+._object-button:active{
+    filter: brightness(90%);
+}
+
+._object-button:disabled{
+    background-color: #eeeeee;
+    color: #bdbdbd;
+    cursor: default;
+    filter: none;
+}
+
+._object-check-wrapper {
+    user-select: none;
+
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+._object-check-wrapper > ._check-input{
+    display: none;
+}
+
+._object-check-wrapper > ._check-toggle {
+    width: 1.1rem;
+    aspect-ratio: 1/1;
+    background-position: center;
+    background-size: 92.5%;
+    background-repeat: no-repeat;
+    border: 0.125rem solid #bdbdbd;
+    border-radius: 0.25rem;
+    margin-right: 0.3rem;
+}
+
+._object-check-wrapper > ._check-input:checked + ._check-toggle{
+    background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAfUlEQVR4nO2SQQ6AIAwE+YREn4gnku4e+KYcfA6GRC9qjIYaPXTOME2365xhPEFEPIDwmpxkJllIjqrylFIHYFrlM4De5O6/sQAItRE325Kv3h6o9br6KC3ys9VjjIN65mdDkvZB91GwJZabmxT1Ku6GzOryDRHxarEYn7AAeDynNQhiJrQAAAAASUVORK5CYII=");
+}
+
 
 #loading{
     top: 0;
@@ -157,10 +255,269 @@ body {
     flex: 1;
 }
 
+#loginForm {
+    top: 50%;
+    left: 50%;
+    width: 25rem;
+    max-height: calc(100vh - 2rem);
+    background-color: #fafafa;
+    border-radius: 0.5rem;
+    box-shadow: 0 0 1rem 0.0625rem #21212145;
+    box-sizing: border-box;
+    opacity: 0;
+    overflow: hidden auto;
+    padding: 2.5rem;
+    pointer-events: none;
+    position: fixed;
+    transform: scale(95%) translate(-50%,-50%);
+    transition-duration: 250ms;
+    transition-property: opacity, transform;
+    transition-timing-function: ease;
+    z-index: 9;
+
+    align-items: stretch;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+#loginForm.visible{
+    opacity: 1;
+    pointer-events: all;
+    transform: scale(100%) translate(-50%,-50%);
+}
+
+
+
+#loginForm > *+* {
+    margin-top: 0.5rem;
+}
+
+#loginForm > .warning {
+    max-height: 0;
+    color: #ef5350;
+    font-size: 0.9rem;
+    margin: unset;
+    overflow: hidden;
+    padding-top: 0;
+    transition-duration: 250ms;
+    transition-property: max-height,padding-top;
+    transition-timing-function: ease;
+}
+
+#loginForm > .warning.visible{
+    max-height: 3rem;
+    padding-top: 0.5rem;
+}
+
+#loginForm > .title {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+#loginForm > .label {
+    align-items: stretch;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+#loginForm > .button-container{
+    display: grid;
+    gap: 0.5rem;
+    grid-template-columns: 1fr 1fr;
+}
+
+#loginForm > .menu {
+    margin-top: 1.5rem;
+
+    align-items: stretch;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+#loginForm > .menu > .item {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+#loginForm > .menu > .item + .item{
+    margin-top: 0.125rem;
+}
+
+#loginForm > .menu > .item > .text{
+    margin-right: 0.5rem;
+}
+
+#registerForm {
+    top: 50%;
+    left: 50%;
+    opacity: 0;
+    perspective: 100vw;
+    pointer-events: none;
+    position: fixed;
+    transform: translate(-50%,-50%);
+    transition-duration: 375ms;
+    transition-property: opacity;
+    transition-timing-function: ease;
+    z-index: 8;
+}
+
+#registerForm.visible {
+    opacity: 1;
+    pointer-events: all;
+}
+
+#registerForm > .section{
+    top: 50%;
+    left: 50%;
+    width: 30rem;
+    max-height: calc(100vh - 2rem);
+    background-color: #fafafa;
+    border-radius: 0.5rem;
+    box-shadow: 0 0 1rem 0.0625rem #21212145;
+    box-sizing: border-box;
+    opacity: 0;
+    overflow: hidden auto;
+    padding: 2.5rem;
+    pointer-events: none;
+    position: absolute;
+    transform:rotateY(-15deg) translate(calc(-50%+ 3rem),-50%);
+    transition-duration: 500ms;
+    transition-property: opacity, transform;
+    transition-timing-function: ease;
+
+    align-items: stretch;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    z-index: 10;
+}
+
+#registerForm > .section .warning{
+    max-height: 0;
+    color: #ef5350;
+    font-size: 0.9rem;
+    margin: unset;
+    overflow: hidden;
+    padding-top: 0;
+    transition-duration: 500ms;
+    transition-property: max-height,padding-top;
+    transition-timing-function: ease;
+}
+
+#registerForm > .section .warning.visible{
+    max-height: 3rem;
+}
+
+
+#registerForm > .section >.title-container{
+    margin-bottom: 1rem;
+
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+#registerForm > .section >.title-container >.title{
+    font-size: 2rem;
+    margin-bottom: 0.25rem;
+}
+
+#registerForm > .section > .title-container > .subtitle {
+    color: #818181;
+}
+
+#registerForm > .section >.button-container {
+    display: grid;
+    grid-gap: 0.5rem;
+    grid-auto-flow: column;
+    margin-top: 1rem;
+}
+
+
+
+#registerForm.step-1 > .section.step-1 {
+    opacity: 1;
+    pointer-events: all;
+    transform: rotateY(0deg) translate(-50%,-50%);
+}
+
+#registerForm.step-2 > .section.step-1{
+    transform: rotateY(15deg) translate(calc(-50% - 3rem), -50%);
+}
+
+#registerForm.step-2 > .section.step-2 {
+    opacity: 1;
+    pointer-events: all;
+    transform: rotateY(0deg) translate(-50%,-50%);
+}
+
+#registerForm.step-3 > .section.step-2{
+    transform: rotateY(15deg) translate(calc(-50% - 3rem), -50%);
+}
+
+#registerForm.step-3 > .section.step-3{
+    opacity: 1;
+    pointer-events: all;
+    transform: rotateY(0deg) translate(-50%,-50%);
+}
+
+#registerForm > .section.step-1 > .content-container{
+    align-items: stretch;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+#registerForm > .section.step-1 > .content-container *+* {
+    margin-top: 0.5rem;
+}
+
+#registerForm > .section.step-1 > .content-container > .label{
+    align-items: stretch;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+#registerForm > .section.step-1 > .content-container > .term-container > .term{
+    height: 7.5rem;
+    resize: none;
+}
+
+#registerForm > .section.step-2 > .content-container{
+    align-items: stretch;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+#registerForm > .section.step-2 > .content-container > .label{
+    align-items: stretch;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+#registerForm > .section.step-2 > .content-container > *+*{
+    margin-top: 0.5rem;
+}
+
+#registerForm > .section.step-2 > .content-container > .label > ._object-input{
+    flex: 1;
+}
+#registerForm > .section.step-2 > .content-container > .label > ._object-button{
+    margin-left: 0.5rem;
+}
 
 #list{
     width: 20rem;
-    border-right: 0.0625rem solid #e0e0e0;
+    border-right: 0.0625rem solid #eeeeee;
     box-sizing: border-box;
 
 
