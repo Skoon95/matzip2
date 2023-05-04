@@ -203,6 +203,7 @@ registerForm['contactSend'].addEventListener('click', () => {
                         registerForm['contactCode'].removeAttribute('disabled');
                         registerForm['contactVerify'].removeAttribute('disabled');
                         registerForm['contactCode'].focus();
+                        registerForm['contactSalt'].value= responseObject.salt;
                         registerForm.contactWarning.show('입력하신 연락처로 인증번호를 전송하였습니다. 5분 이내로 입력해 주세요');
                         break;
                     default:

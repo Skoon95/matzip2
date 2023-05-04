@@ -31,6 +31,9 @@ public class UserController {
         JSONObject responseObject = new JSONObject() {{
            put("result",result.name().toLowerCase());
         }};
+        if (result == SendRegisterContactCodeResult.SUCCESS) {
+            responseObject.put("salt",registerContactCode.getSalt());
+        }
         return responseObject.toString();
     }
 }

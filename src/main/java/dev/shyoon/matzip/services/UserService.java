@@ -4,6 +4,7 @@ import dev.shyoon.matzip.entities.RegisterContactCodeEntity;
 import dev.shyoon.matzip.enums.SendRegisterContactCodeResult;
 import dev.shyoon.matzip.mappers.UserMapper;
 import dev.shyoon.matzip.utils.CryptoUtil;
+import dev.shyoon.matzip.utils.NCloudUtil;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,8 @@ public class UserService {
         Date createdAt = new Date();
         Date expiresAt = DateUtils.addMinutes(createdAt,5);
         registerContactCode.setCode(code).setSalt(salt).setCreatedAt(createdAt).setExpiresAt(expiresAt).setExpired(false);
+        NCloudUtil.sendSms(registerContactCode.getContact(), String.format("[맛집 회원가입] 인증번호 [%s]를 입력해주세요",registerContactCode.getCode()));
+
         return this.userMapper.insertRegisterContactCode(registerContactCode)>0
                 ? SendRegisterContactCodeResult.SUCCESS
                 : SendRegisterContactCodeResult.FAILURE;
