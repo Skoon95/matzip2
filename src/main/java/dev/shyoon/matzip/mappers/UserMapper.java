@@ -9,5 +9,17 @@ import org.apache.ibatis.annotations.Select;
 @Mapper
 public interface UserMapper {
     UserEntity selectUserByContact(@Param(value = "contact") String contact);
+    UserEntity selectUserByEmail(@Param(value = "email")String email);
+    UserEntity selectUserByNickname(@Param(value = "nickname")String nickname);
+
+//    RegisterContactCodeEntity selectContactVerify (@Param(value = "contact")String contact,
+//                                                   @Param(value = "code")String code,
+//                                                   @Param(value = "salt")String salt);
     int insertRegisterContactCode(RegisterContactCodeEntity registerContactCode);
+    int updateRegisterCode(RegisterContactCodeEntity registerContactCodeEntity);
+
+
+
+    RegisterContactCodeEntity selectRegisterContactCodeByContactSalt(RegisterContactCodeEntity registerContactCodeEntity);
+
 }

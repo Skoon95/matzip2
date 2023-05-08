@@ -128,6 +128,7 @@ loginForm.onsubmit = e => {
     xhr.send(formData);
 };
 
+// termWarning
 const registerForm = document.getElementById('registerForm');
 registerForm.termWarning = registerForm.querySelector('[rel="termWarning"]');
 registerForm.termWarning.show = (text) => {
@@ -136,12 +137,38 @@ registerForm.termWarning.show = (text) => {
 };
 registerForm.termWarning.hide = () => registerForm.termWarning.classList.remove('visible');
 
+// contactWarning
 registerForm.contactWarning = registerForm.querySelector('[rel="contactWarning"]');
 registerForm.contactWarning.show = (text) => {
     registerForm.contactWarning.innerText = text;
     registerForm.contactWarning.classList.add('visible');
 };
 registerForm.contactWarning.hide = () => registerForm.contactWarning.classList.remove('visible');
+
+// emailWarning
+registerForm.emailWarning = registerForm.querySelector('[rel="emailWarning"]');
+registerForm.emailWarning.show = (text) => {
+    registerForm.emailWarning.innerText = text;
+    registerForm.emailWarning.classList.add('visible');
+};
+registerForm.emailWarning.hide = () => registerForm.emailWarning.classList.remove('visible');
+
+// passwordWarning
+registerForm.passwordWarning = registerForm.querySelector('[rel="passwordWarning"]');
+registerForm.passwordWarning.show = (text) => {
+    registerForm.passwordWarning.innerText = text;
+    registerForm.passwordWarning.classList.add('visible');
+};
+registerForm.passwordWarning.hide = () => registerForm.passwordWarning.classList.remove('visible');
+
+// nicknameWarning
+registerForm.nicknameWarning = registerForm.querySelector('[rel="nicknameWarning"]');
+registerForm.nicknameWarning.show = (text) => {
+    registerForm.nicknameWarning.innerText = text;
+    registerForm.nicknameWarning.classList.add('visible');
+};
+registerForm.nicknameWarning.hide = () => registerForm.nicknameWarning.classList.remove('visible');
+
 
 registerForm.show = () => {
     registerForm.classList.remove('step-1', 'step-2', 'step-3');
@@ -217,7 +244,133 @@ registerForm['contactSend'].addEventListener('click', () => {
     xhr.send();
 });
 
+registerForm['contactVerify'].addEventListener('click',() => {
+    registerForm.contactWarning.hide();
+    if (registerForm['contactCode'].value===''){
+        registerForm.contactWarning.show('인증번호를 입력해 주세요');
+        registerForm['contactCode'].focus();
+        return;
+    }
+    if (!new RegExp('^(\\d{6})$').test(registerForm['contactCode'].value)){
+        registerForm.contactWarning.show('올바른 인증번호를 입력해 주세요.');
+        registerForm['contactCode'].focus();
+        registerForm['contactCode'].select();
+        return;
+    }
+    const xhr = new XMLHttpRequest();
+    const formData = new  FormData();
+    formData.append('contact',registerForm['contact'].value);
+    formData.append('salt',registerForm['contactSalt'].value);
+    formData.append('code',registerForm['contactCode'].value);
+    xhr.open('PATCH', '/user/contactCode');
+    xhr.onreadystatechange = () => {
+      if (xhr.readyState === XMLHttpRequest.DONE){
+         if (xhr.status >= 200 && xhr.status <300) {
+             const responseObject = JSON.parse(xhr.responseText);
+             switch (responseObject.result){
+                 case 'failure_expired':
+                     registerForm.contactWarning.show('해당 인증번호는 만료 되었습니다. 처음부터 다시 진행해 주세요');
+                     registerForm['contact'].removeAttribute('disabled');
+                     registerForm['contactSend'].removeAttribute('disabled');
+                     registerForm['contactCode'].setAttribute('disabled','disabled');
+                     registerForm['contactVerify'].setAttribute('disabled','disabled');
+                     break;
+                 case 'success':
+                     registerForm['contactCode'].setAttribute('disabled','disabled');
+                     registerForm['contactVerify'].setAttribute('disabled','disabled');
+                     registerForm.contactWarning.show('인증이 완료되었습니다');
+                     break;
+                 default:
+                     registerForm['contactCode'].focus();
+                     registerForm['contactCode'].select();
+                     registerForm.contactWarning.show('인증번호가 올바르지 않습니다. 다시 확인해 주세요');
 
+             }
+         } else {
+             registerForm.contactWarning.show('서버와 통신하지 못하였습니다. 잠시 후 다시 시도해 주세요');
+         }
+       }
+     };
+     xhr.send(formData);
+});
+
+registerForm['email'].addEventListener('focusout', () => {
+    registerForm.emailWarning.hide();
+    if (registerForm['email'].value===''){
+        registerForm.emailWarning.show('이메일을 입력해 주세요.');
+        return;
+    }
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET',`/user/emailCount?email=${registerForm['email'].value}`);
+    xhr.onreadystatechange = () => {
+      if (xhr.readyState === XMLHttpRequest.DONE){
+         if (xhr.status >= 200 && xhr.status <300) {
+             const responseObject = JSON.parse(xhr.responseText);
+             switch (responseObject.result){
+                 case 'duplicate':
+                     registerForm.emailWarning.show('해당 이메일은 이미 사용중 입니다.');
+                     break;
+                 case 'okay':
+                     registerForm.emailWarning.show('해당 이메일은 사용할 수 있습니다');
+                     break;
+                 default:
+                     registerForm.emailWarning.show('서버가 알 수 없는 응답을 반환했습니다. 잠시 후 다시 시도해 주세요.');
+             }
+         } else {
+             registerForm.emailWarning.show('서버와 통신하지 못하였습니다 잠시 후 다시 시도해 주세요.');
+         }
+       }
+     };
+     xhr.send();
+});
+
+['password','passwordCheck'].forEach(name =>{
+   registerForm[name].addEventListener('focusout', ()=>{
+       registerForm.passwordWarning.hide();
+       if (registerForm['password'].value===''){
+           registerForm.passwordWarning.show('비밀번호를 입력해 주세요');
+           return;
+       }
+       if (registerForm['passwordCheck'].value===''){
+           registerForm.passwordWarning.show('비밀번호를 다시 한번 더 입력해 주세요.');
+           return;;
+       }
+       if (registerForm['password'].value !== registerForm['passwordCheck'].value){
+           registerForm.passwordWarning.show('비밀번호가 서로 일치하지 않습니다.');
+           return;
+       }
+   }) ;
+});
+registerForm['nickname'].addEventListener('focusout',() =>{
+   registerForm.nicknameWarning.hide();
+   if (registerForm['nickname'].value===''){
+       registerForm.nicknameWarning.show('별명을 입력해 주세요');
+   }
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET',`/user/nicknameCount?nickname=${registerForm['nickname'].value}`);
+    xhr.onreadystatechange = () => {
+        if (xhr.readyState === XMLHttpRequest.DONE){
+            if (xhr.status >= 200 && xhr.status <300) {
+                const responseObject = JSON.parse(xhr.responseText);
+                switch (responseObject.result){
+                    case 'duplicate':
+                        registerForm.nicknameWarning.show('해당 닉네임은 이미 사용중 입니다.');
+                        break;
+                    case 'okay':
+                        registerForm.nicknameWarning.show('해당 닉네임은 사용할 수 있습니다');
+                        break;
+                    default:
+                        registerForm.nicknameWarning.show('서버가 알 수 없는 응답을 반환했습니다. 잠시 후 다시 시도해 주세요.');
+                }
+            } else {
+                registerForm.nicknameWarning.show('서버와 통신하지 못하였습니다 잠시 후 다시 시도해 주세요.');
+            }
+        }
+    };
+    xhr.send();
+});
+
+//
 const methods = {
     hideLogin: (x, e) => {
         coverElement.hide();
