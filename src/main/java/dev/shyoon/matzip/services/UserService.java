@@ -51,20 +51,6 @@ public class UserService {
 
     }
 
-//    public SendContactVerify sendRegisterContactVerify(RegisterContactCodeEntity registerContactCodeEntity){
-//        RegisterContactCodeEntity registerContactCode = this.userMapper.selectContactVerify(registerContactCodeEntity.getContact(),registerContactCodeEntity.getCode(),registerContactCodeEntity.getSalt());
-//        Date now = new Date();
-//        if (registerContactCode == null){
-//            return SendContactVerify.FAILURE;
-//        }
-//        if (now.compareTo(registerContactCode.getExpiresAt())>0){
-//            return SendContactVerify.FAILURE_EXPIRED;
-//        }
-//        registerContactCode.setExpired(true);
-//        return this.userMapper.updateRegisterCode(registerContactCode)>0
-//                ? SendContactVerify.SUCCESS
-//                : SendContactVerify.FAILURE;
-//    }
 
     public VerifyRegisterContactCodeResult verifyRegisterContactCodeResult(RegisterContactCodeEntity registerContactCode){
         registerContactCode = this.userMapper.selectRegisterContactCodeByContactSalt(registerContactCode);

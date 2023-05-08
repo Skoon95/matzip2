@@ -12,9 +12,7 @@ public interface UserMapper {
     UserEntity selectUserByEmail(@Param(value = "email")String email);
     UserEntity selectUserByNickname(@Param(value = "nickname")String nickname);
 
-//    RegisterContactCodeEntity selectContactVerify (@Param(value = "contact")String contact,
-//                                                   @Param(value = "code")String code,
-//                                                   @Param(value = "salt")String salt);
+
     int insertRegisterContactCode(RegisterContactCodeEntity registerContactCode);
     int updateRegisterCode(RegisterContactCodeEntity registerContactCodeEntity);
 

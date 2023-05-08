@@ -32,22 +32,6 @@
         LIMIT 1
     </select>
 
-<!--    <select id="selectContactVerify"-->
-<!--            parameterType="dev.shyoon.matzip.entities.RegisterContactCodeEntity"-->
-<!--            resultType="dev.shyoon.matzip.entities.RegisterContactCodeEntity">-->
-<!--        SELECT `index`        AS `index`,-->
-<!--               `contact`      AS `contact`,-->
-<!--               `code`         AS `code`,-->
-<!--               `salt`         AS `salt`,-->
-<!--               `created_at`   AS `createdAt`,-->
-<!--               `expires_at`   AS `expiresAt`,-->
-<!--               `expired_flag` AS `isExpired`-->
-<!--        FROM `matzip`.`register_contact_codes`-->
-<!--        WHERE BINARY `contact` = #{contact}-->
-<!--          AND BINARY `code` = #{code}-->
-<!--          AND BINARY `salt` = #{salt}-->
-<!--        LIMIT 1-->
-<!--    </select>-->
 
     <update id="updateRegisterCode"
             parameterType="dev.shyoon.matzip.entities.RegisterContactCodeEntity">
