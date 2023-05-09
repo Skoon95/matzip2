@@ -17,6 +17,18 @@
                 IFNULL(#{isExpired}, DEFAULT(`expired_flag`)))
     </insert>
 
+    <insert id="insertUser"
+            parameterType="dev.shyoon.matzip.entities.UserEntity">
+        INSERT INTO `matzip`.`users`(`email`, `password`, `nickname`, `contact`, `status`,`admin_flag`,`registered_at`)
+        VALUES (#{email},
+                #{password},
+                #{nickname},
+                #{contact},
+                #{status},
+                #{isAdmin},
+                IFNULL(#{registeredAt},DEFAULT(`registered_at`)))
+    </insert>
+
 
     <select id="selectUserByContact"
             resultType="dev.shyoon.matzip.entities.UserEntity">
@@ -90,5 +102,8 @@
         WHERE BINARY `nickname` = #{nickname}
         LIMIT 1
     </select>
+
+
+
 
 </mapper>

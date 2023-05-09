@@ -2,10 +2,7 @@ package dev.shyoon.matzip.services;
 
 import dev.shyoon.matzip.entities.RegisterContactCodeEntity;
 import dev.shyoon.matzip.entities.UserEntity;
-import dev.shyoon.matzip.enums.CheckEmailResult;
-import dev.shyoon.matzip.enums.CheckNicknameResult;
-import dev.shyoon.matzip.enums.SendRegisterContactCodeResult;
-import dev.shyoon.matzip.enums.VerifyRegisterContactCodeResult;
+import dev.shyoon.matzip.enums.*;
 import dev.shyoon.matzip.mappers.UserMapper;
 import dev.shyoon.matzip.utils.CryptoUtil;
 import dev.shyoon.matzip.utils.NCloudUtil;
@@ -80,4 +77,23 @@ public class UserService {
                 : CheckNicknameResult.DUPLICATE;
     }
 
+    public RegisterResult register(UserEntity user,RegisterContactCodeEntity registerContactCode){
+        if (this.userMapper.selectUserByEmail(user.getEmail())!=null){
+            return RegisterResult.FAILURE_DUPLICATE_EMAIL;
+        }
+        if (this.userMapper.selectUserByContact(user.getContact())!=null){
+            return RegisterResult.FAILURE_DUPLICATE_CONTACT;
+        }
+        if (this.userMapper.selectUserByNickname(user.getNickname())!=null){
+            return RegisterResult.FAILURE_DUPLICATE_NICKNAME;
+        }
+        registerContactCode = this.userMapper.selectRegisterContactCodeByContactSalt(registerContactCode);
+        if (registerContactCode == null || !registerContactCode.isExpired()){
+            return RegisterResult.FAILURE;
+        }
+        user.setStatus("EMAIL_PENDING");
+        return this.userMapper.insertUser(user)>0
+                ? RegisterResult.SUCCESS
+                : RegisterResult.FAILURE;
+    }
 }

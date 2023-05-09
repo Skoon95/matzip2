@@ -1,10 +1,8 @@
 package dev.shyoon.matzip.controllers;
 
 import dev.shyoon.matzip.entities.RegisterContactCodeEntity;
-import dev.shyoon.matzip.enums.CheckEmailResult;
-import dev.shyoon.matzip.enums.CheckNicknameResult;
-import dev.shyoon.matzip.enums.SendRegisterContactCodeResult;
-import dev.shyoon.matzip.enums.VerifyRegisterContactCodeResult;
+import dev.shyoon.matzip.entities.UserEntity;
+import dev.shyoon.matzip.enums.*;
 import dev.shyoon.matzip.services.UserService;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,6 +68,19 @@ public class UserController {
     @ResponseBody
     public String getNicknameCount(@RequestParam(value = "nickname")String nickname){
         CheckNicknameResult result = this.userService.checkNicknameResult(nickname);
+        JSONObject responseObject = new JSONObject() {{
+            put("result", result.name().toLowerCase());
+        }};
+        return responseObject.toString();
+    }
+
+    @RequestMapping(value = "register",
+    method = RequestMethod.POST,
+    produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public String postRegister(UserEntity user,
+                               RegisterContactCodeEntity registerContactCode){
+        RegisterResult result = this.userService.register(user,registerContactCode);
         JSONObject responseObject = new JSONObject() {{
             put("result", result.name().toLowerCase());
         }};

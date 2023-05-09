@@ -456,9 +456,14 @@ body {
     pointer-events: all;
     transform: rotateY(0deg) translate(-50%,-50%);
 }
+#registerForm.step-2.working > .section.step-2{
+    opacity: 0.5;
+    pointer-events: none;
+    transform: rotateY(-10deg) translate(-50%,-50%);
+}
 
 #registerForm.step-3 > .section.step-2{
-    transform: rotateY(15deg) translate(calc(-50% - 3rem), -50%);
+    transform: rotateY(15deg) translate(calc(-50% - 1rem), -50%);
 }
 
 #registerForm.step-3 > .section.step-3{
