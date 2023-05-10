@@ -1,6 +1,7 @@
 package dev.shyoon.matzip.mappers;
 
 import dev.shyoon.matzip.entities.RegisterContactCodeEntity;
+import dev.shyoon.matzip.entities.RegisterEmailCodeEntity;
 import dev.shyoon.matzip.entities.UserEntity;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -15,6 +16,7 @@ public interface UserMapper {
 
     int insertRegisterContactCode(RegisterContactCodeEntity registerContactCode);
     int updateRegisterCode(RegisterContactCodeEntity registerContactCodeEntity);
+    int insertRegisterEmailCode(RegisterEmailCodeEntity registerEmailCode);
 
     int insertUser(UserEntity user);
 

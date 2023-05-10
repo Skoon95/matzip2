@@ -213,7 +213,8 @@ registerForm.onsubmit = e => {
         registerForm.classList.remove('step-1');
         registerForm.classList.add('step-2');
         registerForm['email'].focus();
-    } else if (registerForm.classList.contains('step-2')) {
+    }
+    if (registerForm.classList.contains('step-2')) {
         if (registerForm['email'].value === '') {
             registerForm.emailWarning.show('이메일을 입력해 주세요');
             registerForm['email'].focus();
@@ -303,6 +304,10 @@ registerForm.onsubmit = e => {
         };
         xhr.send(formData);
         registerForm.classList.add('working');
+    }
+    if (registerForm.classList.contains('step-3')){
+        coverElement.hide();
+        registerForm.hide();
     }
 };
 registerForm['contactSend'].addEventListener('click', () => {

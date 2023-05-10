@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.mail.MessagingException;
+
 @Controller
 @RequestMapping(value = "/user")
 public class UserController {
@@ -79,7 +81,7 @@ public class UserController {
     produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public String postRegister(UserEntity user,
-                               RegisterContactCodeEntity registerContactCode){
+                               RegisterContactCodeEntity registerContactCode) throws MessagingException {
         RegisterResult result = this.userService.register(user,registerContactCode);
         JSONObject responseObject = new JSONObject() {{
             put("result", result.name().toLowerCase());
