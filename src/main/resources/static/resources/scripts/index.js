@@ -82,7 +82,6 @@ loginForm.hide = () => {
 }
 loginForm.onsubmit = e => {
     e.preventDefault();
-
     if (loginForm['email'].value === '') {
         loginForm['email'].classList.add('_invalid');
         loginForm['email'].focus();
@@ -112,11 +111,14 @@ loginForm.onsubmit = e => {
                     loginForm['email'].focus();
                     loginForm['email'].select();
                     break;
+                case 'failure_suspended':
+                    loginForm.loginWarning.show('해당 계정은 이용이 정지된 계정입니다. 관리자에게 문의해주세요.');
+                    break;
+                case 'failure_email_not_verified':
+                    loginForm.loginWarning.show('이메일 인증이 완료되지 않은 계정입니다. 이메일 인증 후 다시 시도해 주세요.');
+                    break;
                 case 'success':
                     location.href += '';
-                    break;
-                case 'suspended':
-                    loginForm.loginWarning.show('해당 계정은 이용이 정지된 계정입니다. 관리자에게 문의해주세요.');
                     break;
                 default:
                     loginForm.loginWarning.show('서버가 알 수 없는 응답을 반환했습니다. 관리자에게 문의해 주세요')

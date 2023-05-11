@@ -3,6 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="dev.shyoon.matzip.mappers.UserMapper">
+    <!--    insert-->
     <insert id="insertRegisterContactCode"
             useGeneratedKeys="true"
             keyColumn="index"
@@ -41,7 +42,7 @@
                    #{isExpired});
     </insert>
 
-
+    <!--select-->
     <select id="selectUserByContact"
             resultType="dev.shyoon.matzip.entities.UserEntity">
         SELECT `email`         AS `email`,
@@ -56,19 +57,6 @@
         LIMIT 1
     </select>
 
-
-    <update id="updateRegisterCode"
-            parameterType="dev.shyoon.matzip.entities.RegisterContactCodeEntity">
-        UPDATE `matzip`.`register_contact_codes`
-        SET `contact`      =#{contact},
-            `code`         = #{code},
-            `salt`         = #{salt},
-            `created_at`   = #{createdAt},
-            `expires_at`   = #{expiresAt},
-            `expired_flag` = #{isExpired}
-        WHERE `index` = #{index}
-        LIMIT 1
-    </update>
 
     <select id="selectRegisterContactCodeByContactSalt"
             parameterType="dev.shyoon.matzip.entities.RegisterContactCodeEntity"
@@ -115,5 +103,77 @@
         LIMIT 1
     </select>
 
+    <select id="selectUserByEmailPassword"
+            resultType="dev.shyoon.matzip.entities.UserEntity">
+        SELECT `email`         AS `email`,
+               `password`      AS `password`,
+               `nickname`      AS `nickname`,
+               `contact`       AS `contact`,
+               `status`        AS `status`,
+               `admin_flag`    AS `isAdmin`,
+               `registered_at` AS `registeredAt`
+        FROM `matzip`.`users`
+        WHERE BINARY `email` = #{email}
+          AND BINARY `password` = #{password}
+        LIMIT 1
+    </select>
+
+    <select id="selectRegisterEmailCodeByEmailCodeSalt"
+            parameterType="dev.shyoon.matzip.entities.RegisterEmailCodeEntity"
+            resultType="dev.shyoon.matzip.entities.RegisterEmailCodeEntity">
+        SELECT `index`        AS `index`,
+               `email`        AS `email`,
+               `code`         AS `code`,
+               `salt`         AS `salt`,
+               `created_at`   AS `createdAt`,
+               `expires_at`   AS `expiresAt`,
+               `expired_flag` AS `isExpired`
+        FROM `matzip`.`register_email_codes`
+        WHERE BINARY `email` = #{email}
+          AND BINARY `code` = #{code}
+          AND BINARY `salt` = #{salt}
+        LIMIT 1
+    </select>
+
+
+    <!--    update-->
+    <update id="updateRegisterCode"
+            parameterType="dev.shyoon.matzip.entities.RegisterContactCodeEntity">
+        UPDATE `matzip`.`register_contact_codes`
+        SET `contact`      =#{contact},
+            `code`         = #{code},
+            `salt`         = #{salt},
+            `created_at`   = #{createdAt},
+            `expires_at`   = #{expiresAt},
+            `expired_flag` = #{isExpired}
+        WHERE `index` = #{index}
+        LIMIT 1
+    </update>
+
+    <update id="updateRegisterEmailCode"
+            parameterType="dev.shyoon.matzip.entities.RegisterEmailCodeEntity">
+        UPDATE `matzip`.`register_email_codes`
+        SET `email`       = #{email},
+            `code`        = #{code},
+            `salt`        = #{salt},
+            `created_at`  =#{createdAt},
+            `expires_at`  =#{expiresAt},
+            `expired_flag`=#{isExpired}
+        WHERE `index` = #{index}
+        LIMIT 1
+    </update>
+
+    <update id="updateUser"
+            parameterType="dev.shyoon.matzip.entities.UserEntity">
+        UPDATE `matzip`.`users`
+        SET `password`=#{password},
+            `nickname`=#{nickname},
+            `contact`=#{contact},
+            `status`=#{status},
+            `admin_flag`=#{isAdmin},
+            `registered_at`=#{registeredAt}
+        WHERE `email` = #{email}
+        LIMIT 1
+    </update>
 
 </mapper>

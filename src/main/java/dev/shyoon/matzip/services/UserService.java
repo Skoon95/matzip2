@@ -139,4 +139,58 @@ public class UserService {
                 ? RegisterResult.SUCCESS
                 : RegisterResult.FAILURE;
     }
+
+    public LoginResult login(UserEntity user){
+        if (user.getEmail() == null || user.getPassword() == null){
+            return LoginResult.FAILURE;
+        }
+        UserEntity existingUser = this.userMapper.selectUserByEmail(user.getEmail());
+        if (existingUser == null){
+            return LoginResult.FAILURE;
+        }
+        user.setPassword(CryptoUtil.hashSha512(user.getPassword()));
+        if (!user.getPassword().equals(existingUser.getPassword())){
+            return LoginResult.FAILURE;
+        }
+        user.setNickname(existingUser.getNickname())
+                .setContact(existingUser.getContact())
+                .setStatus(existingUser.getStatus())
+                .setAdmin(existingUser.isAdmin())
+                .setRegisteredAt(existingUser.getRegisteredAt());
+        if (user.getStatus().equals("DELETED")){
+            return LoginResult.FAILURE;
+        }
+        if (user.getStatus().equals("EMAIL_PENDING")){
+            return LoginResult.FAILURE_EMAIL_NOT_VERIFIED;
+        }
+        if (user.getStatus().equals("SUSPENDED")){
+            return LoginResult.FAILURE_SUSPENDED;
+        }
+
+        return LoginResult.SUCCESS;
+
+    }
+
+    public VerifyRegisterEmailCodeResult verifyRegisterEmailCode(RegisterEmailCodeEntity registerEmailCode){
+        if (registerEmailCode.getCode() == null ||
+                registerEmailCode.getCode()== null ||
+                registerEmailCode.getSalt() == null){
+            return VerifyRegisterEmailCodeResult.FAILURE;
+        }
+        registerEmailCode = this.userMapper.selectRegisterEmailCodeByEmailCodeSalt(registerEmailCode);
+        if (registerEmailCode == null){
+            return VerifyRegisterEmailCodeResult.FAILURE;
+        }
+        if (new Date().compareTo(registerEmailCode.getExpiresAt())>0){
+            return VerifyRegisterEmailCodeResult.FAILURE_EXPIRED;
+        }
+        registerEmailCode.setExpired(true);
+        UserEntity user = this.userMapper.selectUserByEmail(registerEmailCode.getEmail());
+        user.setStatus("OKAY");
+
+        return this.userMapper.updateRegisterEmailCode(registerEmailCode)>0 && this.userMapper.updateUser(user)>0
+                ? VerifyRegisterEmailCodeResult.SUCCESS
+                : VerifyRegisterEmailCodeResult.FAILURE;
+    }
+
 }

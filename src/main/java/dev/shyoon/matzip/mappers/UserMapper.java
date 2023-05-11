@@ -13,12 +13,16 @@ public interface UserMapper {
     UserEntity selectUserByEmail(@Param(value = "email")String email);
     UserEntity selectUserByNickname(@Param(value = "nickname")String nickname);
 
+    RegisterEmailCodeEntity selectRegisterEmailCodeByEmailCodeSalt(RegisterEmailCodeEntity registerEmailCode);
+
 
     int insertRegisterContactCode(RegisterContactCodeEntity registerContactCode);
-    int updateRegisterCode(RegisterContactCodeEntity registerContactCodeEntity);
     int insertRegisterEmailCode(RegisterEmailCodeEntity registerEmailCode);
-
     int insertUser(UserEntity user);
+
+    int updateRegisterCode(RegisterContactCodeEntity registerContactCodeEntity);
+    int updateRegisterEmailCode(RegisterEmailCodeEntity registerEmailCode);
+    int updateUser(UserEntity user);
 
     RegisterContactCodeEntity selectRegisterContactCodeByContactSalt(RegisterContactCodeEntity registerContactCodeEntity);
 
