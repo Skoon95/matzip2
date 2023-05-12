@@ -196,8 +196,11 @@ public class UserService {
         if (recoverContactCode == null
                 || recoverContactCode.getContact() == null
                 || !recoverContactCode.getContact().matches("^(010)(\\d{8})$")) {
+            System.out.println("AB");
             return SendRecoverContactCodeResult.FAILURE;
         }
+
+
         String code = RandomStringUtils.randomNumeric(6);
         String salt = CryptoUtil.hashSha512(String.format("%s%s%f%f",
                 recoverContactCode.getCode(),
