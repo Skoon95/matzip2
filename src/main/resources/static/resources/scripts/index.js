@@ -317,7 +317,7 @@ registerForm['contactSend'].addEventListener('click', () => {
     if (registerForm['contact'].value === '') {
         registerForm.contactWarning.show('연락처를 입력해 주세요');
         registerForm['contact'].focus();
-        return
+        return;
     }
     if (!new RegExp('^(010)(\\d{8})$').test(registerForm['contact'].value)) {
         registerForm.contactWarning.show('올바른 번호를 입력해 주세요');
@@ -509,6 +509,16 @@ const methods = {
         });
         loginForm.hide();
         registerForm.show();
+    },
+    showRecover:(x,e) =>{
+      e.preventDefault();
+      loginForm.hide();
+      coverElement.show(()=>{
+         coverElement.hide();
+         recoverForm.hide();
+      });
+      recoverForm.show();
+      recoverForm['eContact'].focus();
     },
     logout: (x, e) => {
         alert('로그아웃 해야함');

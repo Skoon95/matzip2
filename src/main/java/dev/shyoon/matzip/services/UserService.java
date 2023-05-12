@@ -1,5 +1,6 @@
 package dev.shyoon.matzip.services;
 
+import dev.shyoon.matzip.entities.RecoverContactCodeEntity;
 import dev.shyoon.matzip.entities.RegisterContactCodeEntity;
 import dev.shyoon.matzip.entities.RegisterEmailCodeEntity;
 import dev.shyoon.matzip.entities.UserEntity;
@@ -74,8 +75,6 @@ public class UserService {
         return this.userMapper.updateRegisterCode(registerContactCode) > 0
                 ? VerifyRegisterContactCodeResult.SUCCESS
                 : VerifyRegisterContactCodeResult.FAILURE;
-
-
     }
 
     public CheckEmailResult checkEmailResult(String email) {
@@ -124,15 +123,15 @@ public class UserService {
                 registerEmailCode.getCode(),
                 registerEmailCode.getSalt());
         Context context = new Context();
-        context.setVariable("url",url);
+        context.setVariable("url", url);
 
 
         MimeMessage mimeMessage = this.javaMailSender.createMimeMessage();
-        MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage,true,"UTF-8");
+        MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
         mimeMessageHelper.setSubject("[맛집 회원가입] 이메일 인증");
         mimeMessageHelper.setFrom("tjrgns21@gamil.com");
         mimeMessageHelper.setTo(user.getEmail());
-        mimeMessageHelper.setText(this.springTemplateEngine.process("_registerEmail",context),true);
+        mimeMessageHelper.setText(this.springTemplateEngine.process("_registerEmail", context), true);
         this.javaMailSender.send(mimeMessage);
 
         return this.userMapper.insertUser(user) > 0 && this.userMapper.insertRegisterEmailCode(registerEmailCode) > 0
@@ -140,16 +139,16 @@ public class UserService {
                 : RegisterResult.FAILURE;
     }
 
-    public LoginResult login(UserEntity user){
-        if (user.getEmail() == null || user.getPassword() == null){
+    public LoginResult login(UserEntity user) {
+        if (user.getEmail() == null || user.getPassword() == null) {
             return LoginResult.FAILURE;
         }
         UserEntity existingUser = this.userMapper.selectUserByEmail(user.getEmail());
-        if (existingUser == null){
+        if (existingUser == null) {
             return LoginResult.FAILURE;
         }
         user.setPassword(CryptoUtil.hashSha512(user.getPassword()));
-        if (!user.getPassword().equals(existingUser.getPassword())){
+        if (!user.getPassword().equals(existingUser.getPassword())) {
             return LoginResult.FAILURE;
         }
         user.setNickname(existingUser.getNickname())
@@ -157,13 +156,13 @@ public class UserService {
                 .setStatus(existingUser.getStatus())
                 .setAdmin(existingUser.isAdmin())
                 .setRegisteredAt(existingUser.getRegisteredAt());
-        if (user.getStatus().equals("DELETED")){
+        if (user.getStatus().equals("DELETED")) {
             return LoginResult.FAILURE;
         }
-        if (user.getStatus().equals("EMAIL_PENDING")){
+        if (user.getStatus().equals("EMAIL_PENDING")) {
             return LoginResult.FAILURE_EMAIL_NOT_VERIFIED;
         }
-        if (user.getStatus().equals("SUSPENDED")){
+        if (user.getStatus().equals("SUSPENDED")) {
             return LoginResult.FAILURE_SUSPENDED;
         }
 
@@ -171,26 +170,67 @@ public class UserService {
 
     }
 
-    public VerifyRegisterEmailCodeResult verifyRegisterEmailCode(RegisterEmailCodeEntity registerEmailCode){
+    public VerifyRegisterEmailCodeResult verifyRegisterEmailCode(RegisterEmailCodeEntity registerEmailCode) {
         if (registerEmailCode.getCode() == null ||
-                registerEmailCode.getCode()== null ||
-                registerEmailCode.getSalt() == null){
+                registerEmailCode.getCode() == null ||
+                registerEmailCode.getSalt() == null) {
             return VerifyRegisterEmailCodeResult.FAILURE;
         }
         registerEmailCode = this.userMapper.selectRegisterEmailCodeByEmailCodeSalt(registerEmailCode);
-        if (registerEmailCode == null){
+        if (registerEmailCode == null) {
             return VerifyRegisterEmailCodeResult.FAILURE;
         }
-        if (new Date().compareTo(registerEmailCode.getExpiresAt())>0){
+        if (new Date().compareTo(registerEmailCode.getExpiresAt()) > 0) {
             return VerifyRegisterEmailCodeResult.FAILURE_EXPIRED;
         }
         registerEmailCode.setExpired(true);
         UserEntity user = this.userMapper.selectUserByEmail(registerEmailCode.getEmail());
         user.setStatus("OKAY");
 
-        return this.userMapper.updateRegisterEmailCode(registerEmailCode)>0 && this.userMapper.updateUser(user)>0
+        return this.userMapper.updateRegisterEmailCode(registerEmailCode) > 0 && this.userMapper.updateUser(user) > 0
                 ? VerifyRegisterEmailCodeResult.SUCCESS
                 : VerifyRegisterEmailCodeResult.FAILURE;
+    }
+
+    public SendRecoverContactCodeResult sendRecoverContactCode(RecoverContactCodeEntity recoverContactCode) {
+        if (recoverContactCode == null
+                || recoverContactCode.getContact() == null
+                || !recoverContactCode.getContact().matches("^(010)(\\d{8})$")) {
+            return SendRecoverContactCodeResult.FAILURE;
+        }
+        String code = RandomStringUtils.randomNumeric(6);
+        String salt = CryptoUtil.hashSha512(String.format("%s%s%f%f",
+                recoverContactCode.getCode(),
+                code,
+                Math.random(),
+                Math.random()));
+        Date createdAt = new Date();
+        Date expiresAt = DateUtils.addMinutes(createdAt, 5);
+        recoverContactCode.setCode(code).setSalt(salt).setCreatedAt(createdAt).setExpiresAt(expiresAt).setExpired(false);
+        NCloudUtil.sendSms(recoverContactCode.getContact(), String.format("[맛집] 인증번호 [%s]를 입력해주세요", recoverContactCode.getCode()));
+
+        return this.userMapper.insertRecoverContactCode(recoverContactCode) > 0
+                ? SendRecoverContactCodeResult.SUCCESS
+                : SendRecoverContactCodeResult.FAILURE;
+    }
+
+    public VerifyRecoverContactCodeResult verifyRecoverContactCode(RecoverContactCodeEntity recoverContactCode) {
+        recoverContactCode = this.userMapper.selectRecoverContactCodeByContactCodeSalt(recoverContactCode);
+        if (recoverContactCode == null) {
+            return VerifyRecoverContactCodeResult.FAILURE;
+        }
+        if (new Date().compareTo(recoverContactCode.getExpiresAt()) > 0) {
+            return VerifyRecoverContactCodeResult.FAILURE_EXPIRED;
+        }
+        recoverContactCode.setExpired(true);
+        return this.userMapper.updateRecoverContactCode(recoverContactCode) > 0
+                ? VerifyRecoverContactCodeResult.SUCCESS
+                : VerifyRecoverContactCodeResult.FAILURE;
+    }
+
+    public UserEntity getUserByContact(String contact) {
+
+        return null;
     }
 
 }

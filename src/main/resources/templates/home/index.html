@@ -9,7 +9,9 @@
     <link rel="stylesheet" th:href="@{/resources/stylesheets/index.css}">
     <link rel="shortcut icon" th:href="@{/resources/images/shortcut_icon.png}">
     <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b6462c91e8ee8b64eee4906edc27e191&libraries=services,clusterer,drawing"></script>
+    <script defer th:src="@{/resources/scripts/common.js}"></script>
     <script defer th:src="@{/resources/scripts/index.js}"></script>
+    <script defer th:src="@{/resources/scripts/index.recover.js}"></script>
 </head>
 <body>
 <div id="loading" class="visible">
@@ -43,7 +45,7 @@
         </li>
         <li class="item">
             <span class="text">이메일 혹은 비밀번호를 분실하셨나요?</span>
-            <a href="#" class="link">계정 복구</a>
+            <a href="#" class="link" data-method="showRecover">계정 복구</a>
         </li>
     </ul>
 </form>
@@ -92,14 +94,16 @@
             </label>
             <span class="warning email" rel="emailWarning"></span>
             <label class="label">
-                <input class="_object-input" maxlength="50" name="password" type="password" placeholder="비밀번호(8자 이상 50자 이하)">
+                <input class="_object-input" maxlength="50" name="password" type="password"
+                       placeholder="비밀번호(8자 이상 50자 이하)">
             </label>
             <label class="label">
                 <input class="_object-input" maxlength="50" name="passwordCheck" type="password" placeholder="비밀번호 확인">
             </label>
             <span class="warning password" rel="passwordWarning"></span>
             <label class="label">
-                <input class="_object-input" maxlength="10" name="nickname" placeholder="별명 (2자 이상 10자 이하 완성 한글)" type="text">
+                <input class="_object-input" maxlength="10" name="nickname" placeholder="별명 (2자 이상 10자 이하 완성 한글)"
+                       type="text">
             </label>
             <span class="warning nickname" rel="nicknameWarning"></span>
             <label class="label">
@@ -124,11 +128,47 @@
             <h3 class="subtitle">회원가입 완료</h3>
         </div>
         <div class="content-container">
-            입력하신 이메일로 계정 인증을 위한 링크가 담긴 메일을 전송하였습니다. 이메일 인증을 완료한 후 로그인 및 서비스 이용이 가능합니다.<br><br>전송된 링크는 1시간 동안 유효함으로 유의해주시기 바랍니다.</div>
+            입력하신 이메일로 계정 인증을 위한 링크가 담긴 메일을 전송하였습니다. 이메일 인증을 완료한 후 로그인 및 서비스 이용이 가능합니다.<br><br>전송된 링크는 1시간 동안 유효함으로
+            유의해주시기 바랍니다.
+        </div>
         <div class="button-container">
             <input class="_object-button _color-concept" type="submit" value="완료">
         </div>
     </section>
+</form>
+<form id="recoverForm" class="visible">
+    <h2 class="title">계정 복구</h2>
+    <div class="option-container">
+        <label class="label email">
+            <input class="option " name="option" type="radio" value="email">
+            <span class="text">이메일 찾기</span>
+        </label>
+        <label class="label password">
+            <input class="option" name="option" type="radio" value="password">
+            <span class="text">비밀번호 재설정</span>
+        </label>
+    </div>
+    <div class="field email-container">
+        <label class="label">
+            <input class="_object-input" maxlength="12" placeholder="연락처 ('-' 없이 입력)" type="text" name="eContact">
+            <input class="_object-button" name="eContactSend" type="button" value="인증번호 전송">
+        </label>
+        <label class="label">
+            <input disabled class="_object-input" maxlength="6" placeholder="인증번호" type="text" name="eContactCode">
+            <input disabled class="_object-button" name="eContactVerify" type="button" value="인증번호 확인">
+        </label>
+        <input hidden name="eContactSalt" type="hidden">
+    </div>
+    <div class="field password-container">
+        <label class="label">
+            <input class="_object-input" maxlength="50" name="pEmail" placeholder="이메일 주소" type="email">
+        </label>
+    </div>
+    <span class="warning" rel="warning"></span>
+    <div class="button-container">
+        <input class="_object-button" name="cancel" type="button" value="취소" data-method="hideRegister">
+        <input class="_object-button _color-concept" type="submit" value="다음">
+    </div>
 </form>
 <ul id="menu">
     <li class="item logo-container">

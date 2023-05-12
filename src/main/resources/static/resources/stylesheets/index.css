@@ -255,7 +255,7 @@ body {
     flex: 1;
 }
 
-#loginForm {
+#loginForm, #recoverForm{
     top: 50%;
     left: 50%;
     width: 25rem;
@@ -281,7 +281,7 @@ body {
     justify-content: flex-start;
 }
 
-#loginForm.visible{
+#loginForm.visible, #recoverForm.visible{
     opacity: 1;
     pointer-events: all;
     transform: scale(100%) translate(-50%,-50%);
@@ -289,11 +289,11 @@ body {
 
 
 
-#loginForm > *+* {
+#loginForm > *+*, #recoverForm> *+* {
     margin-top: 0.5rem;
 }
 
-#loginForm > .warning {
+#loginForm > .warning , #recoverForm > .warning {
     max-height: 0;
     color: #ef5350;
     font-size: 0.9rem;
@@ -305,24 +305,24 @@ body {
     transition-timing-function: ease;
 }
 
-#loginForm > .warning.visible{
+#loginForm > .warning.visible, #recoverForm> .warning.visible  {
     max-height: 3rem;
     padding-top: 0.5rem;
 }
 
-#loginForm > .title {
+#loginForm > .title, #recoverForm > .title {
     font-size: 2rem;
     margin-bottom: 1rem;
 }
 
-#loginForm > .label {
+#loginForm > .label, #recoverForm > .label {
     align-items: stretch;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
 }
 
-#loginForm > .button-container{
+#loginForm > .button-container, #recoverForm > .button-container {
     display: grid;
     gap: 0.5rem;
     grid-template-columns: 1fr 1fr;
@@ -519,6 +519,69 @@ body {
 #registerForm > .section.step-2 > .content-container > .label > ._object-button{
     margin-left: 0.5rem;
 }
+
+#recoverForm > .option-container{
+    display: grid;
+    gap: 0.5rem;
+    grid-template-columns: 1fr 1fr;
+}
+
+#recoverForm > .option-container > .label{
+    border: 0.0625rem solid #e0e0e0;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    padding: 0.5rem;
+
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+
+#recoverForm > .option-container > .label:has(> .option:checked){
+    background-color: #0288d1;
+    border: 0.0625rem solid #0288d1;
+    color: #ffffff;
+}
+
+#recoverForm > .email-container,
+#recoverForm > .password-container{
+    display: none;
+}
+
+#recoverForm > .option-container:has(> .label.email > .option:checked) ~ .email-container{
+    display: flex;
+}
+
+#recoverForm > .option-container:has(> .label.password > .option:checked) ~ .password-container{
+    display: flex;
+}
+
+#recoverForm > .field {
+    align-items: stretch;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+#recoverForm > .field > .label{
+    align-items: stretch;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+#recoverForm > .field > *+*{
+    margin-top: 0.5rem;
+}
+
+#recoverForm > .field > .label > ._object-input{
+    width: 100%;
+    box-sizing: border-box;
+    flex:1;
+    margin-right: 0.5rem;
+}
+
 
 #list{
     width: 20rem;
