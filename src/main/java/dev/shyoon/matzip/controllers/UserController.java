@@ -166,5 +166,16 @@ public class UserController {
         return responseObject.toString();
     }
 
+//    @RequestMapping(value = "recoverPassword",
+//            method = RequestMethod.POST,
+//            produces = MediaType.APPLICATION_JSON_VALUE)
+//    @ResponseBody
+//    public String postRecoverPassword(RegisterEmailCodeEntity recoverEmailCode) throws MessagingException {
+//        SendRecoverEmailCodeResult result = this.userService.sendRecoverEmailCode(recoverEmailCode);
+//        JSONObject responseObject = new JSONObject() {{
+//            put("result", result.name().toLowerCase());
+//        }};
+//        return responseObject.toString();
+//    }
 
 }

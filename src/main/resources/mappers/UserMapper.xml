@@ -163,6 +163,10 @@
         LIMIT 1
     </select>
 
+<!--<select id="selectRecoverEmailCodeByEmailCodeSalt"-->
+
+
+
     <!--    update-->
     <update id="updateRegisterCode"
             parameterType="dev.shyoon.matzip.entities.RegisterContactCodeEntity">

@@ -20,6 +20,8 @@ public interface UserMapper {
 
     RecoverContactCodeEntity selectRecoverContactCodeByContactCodeSalt(RecoverContactCodeEntity recoverContactCode);
 
+//    RecoverEmailCodeEntity selectRecoverEmailCodeByEmailCodeSalt(RecoverEmailCodeEntity recoverEmailCode);
+
 
     int insertRegisterContactCode(RegisterContactCodeEntity registerContactCode);
     int insertRegisterEmailCode(RegisterEmailCodeEntity registerEmailCode);

@@ -245,4 +245,28 @@ public class UserService {
         return this.userMapper.selectUserByContact(contact);
     }
 
+//    public RecoverPasswordResult recoverPassword(RegisterEmailCodeEntity recoverEmailCode, UserEntity user) {
+//        if (recoverEmailCode == null ||
+//                recoverEmailCode.getEmail() == null ||
+//                recoverEmailCode.getCode() == null ||
+//                recoverEmailCode.getSalt() == null ||
+//                user == null ||
+//                user.getPassword() == null) {
+//            return RecoverPasswordResult.FAILURE;
+//        }
+//        String newPassword = CryptoUtil.hashSha512(user.getPassword());
+//        recoverEmailCode = this.userMapper.selectRecoverEmailCodeByEmailCodeSalt(recoverEmailCode);
+//        if (recoverEmailCode == null || !recoverEmailCode.isExpired()) {
+//            return RecoverPasswordResult.FAILURE;
+//        }
+//        user = this.userMapper.selectUserByEmail(user.getEmail());
+//        if (user == null) {
+//            return RecoverPasswordResult.FAILURE;
+//        }
+//        user.setPassword(newPassword)
+//        user.setPassword(CryptoUtil.hashSha512(user.getPassword()));
+//        return this.userMapper.updateUser(user) > 0 && this.userMapper.deleteRecoverEmailCode(recoverEmailCode) > 0
+//                ? RecoverPasswordResult.SUCCESS
+//                : RecoverPasswordResult.FAILURE;
+//    }
 }
