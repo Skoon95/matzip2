@@ -193,31 +193,41 @@ public class UserService {
     }
 
     public SendRecoverContactCodeResult sendRecoverContactCode(RecoverContactCodeEntity recoverContactCode) {
-        if (recoverContactCode == null
-                || recoverContactCode.getContact() == null
-                || !recoverContactCode.getContact().matches("^(010)(\\d{8})$")) {
-            System.out.println("AB");
+        if (recoverContactCode == null ||
+                recoverContactCode.getContact() == null ||
+                !recoverContactCode.getContact().matches("^(010\\d{8})$")) {
             return SendRecoverContactCodeResult.FAILURE;
         }
-
-
-        String code = RandomStringUtils.randomNumeric(6);
-        String salt = CryptoUtil.hashSha512(String.format("%s%s%f%f",
-                recoverContactCode.getCode(),
-                code,
-                Math.random(),
-                Math.random()));
-        Date createdAt = new Date();
-        Date expiresAt = DateUtils.addMinutes(createdAt, 5);
-        recoverContactCode.setCode(code).setSalt(salt).setCreatedAt(createdAt).setExpiresAt(expiresAt).setExpired(false);
-        NCloudUtil.sendSms(recoverContactCode.getContact(), String.format("[맛집] 인증번호 [%s]를 입력해주세요", recoverContactCode.getCode()));
-
+        UserEntity existingUser = this.userMapper.selectUserByContact(recoverContactCode.getContact());
+        if (existingUser == null) {
+            return SendRecoverContactCodeResult.FAILURE;
+        }
+        recoverContactCode
+                .setCode(RandomStringUtils.randomNumeric(6))
+                .setSalt(CryptoUtil.hashSha512(String.format("%s%s%f%f",
+                        recoverContactCode.getCode(),
+                        recoverContactCode.getContact(),
+                        Math.random(),
+                        Math.random())))
+                .setCreatedAt(new Date())
+                .setExpiresAt(DateUtils.addMinutes(recoverContactCode.getCreatedAt(), 5))
+                .setExpired(false);
+        NCloudUtil.sendSms(recoverContactCode.getContact(), String.format("[맛집 이메일 찾기] 인증번호 [%s]를 입력해 주세요.", recoverContactCode.getCode()));
         return this.userMapper.insertRecoverContactCode(recoverContactCode) > 0
                 ? SendRecoverContactCodeResult.SUCCESS
                 : SendRecoverContactCodeResult.FAILURE;
     }
 
-    public VerifyRecoverContactCodeResult verifyRecoverContactCode(RecoverContactCodeEntity recoverContactCode) {
+    public VerifyRecoverContactCodeResult recoverContactCodeResult(RecoverContactCodeEntity recoverContactCode) {
+        if (recoverContactCode == null ||
+                recoverContactCode.getContact() == null ||
+                recoverContactCode.getCode() == null ||
+                recoverContactCode.getSalt() == null ||
+                !recoverContactCode.getContact().matches("^(010\\d{8})$") ||
+                !recoverContactCode.getCode().matches("^(\\d{6})$") ||
+                !recoverContactCode.getSalt().matches("^([\\da-f]{128})$")) {
+            return VerifyRecoverContactCodeResult.FAILURE;
+        }
         recoverContactCode = this.userMapper.selectRecoverContactCodeByContactCodeSalt(recoverContactCode);
         if (recoverContactCode == null) {
             return VerifyRecoverContactCodeResult.FAILURE;
@@ -228,12 +238,11 @@ public class UserService {
         recoverContactCode.setExpired(true);
         return this.userMapper.updateRecoverContactCode(recoverContactCode) > 0
                 ? VerifyRecoverContactCodeResult.SUCCESS
-                : VerifyRecoverContactCodeResult.FAILURE;
+                : VerifyRecoverContactCodeResult.FAILURE_EXPIRED;
     }
 
     public UserEntity getUserByContact(String contact) {
-
-        return null;
+        return this.userMapper.selectUserByContact(contact);
     }
 
 }

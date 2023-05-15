@@ -2,16 +2,18 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>맛을 담다 - 맛집</title>
     <link rel="stylesheet" th:href="@{/resources/stylesheets/index.css}">
     <link rel="shortcut icon" th:href="@{/resources/images/shortcut_icon.png}">
-    <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b6462c91e8ee8b64eee4906edc27e191&libraries=services,clusterer,drawing"></script>
+    <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=3548a11ff0aa203fb300e1a908d69de3&libraries=services,clusterer,drawing"></script>
     <script defer th:src="@{/resources/scripts/common.js}"></script>
-    <script defer th:src="@{/resources/scripts/index.js}"></script>
+    <script defer th:src="@{/resources/scripts/index.login.js}"></script>
+    <script defer th:src="@{/resources/scripts/index.map.js}"></script>
     <script defer th:src="@{/resources/scripts/index.recover.js}"></script>
+    <script defer th:src="@{/resources/scripts/index.register.js}"></script>
+    <script defer th:src="@{/resources/scripts/index.js}"></script>
 </head>
 <body>
 <div id="loading" class="visible">
@@ -28,28 +30,28 @@
         <input class="_object-input input" maxlength="50" name="password" placeholder="비밀번호" type="password">
     </label>
     <span class="warning password" rel="passwordWarning">올바른 비밀번호를 입력해 주세요.</span>
-    <span class="warning Login" rel="loginWarning">이메일 혹은 비밀번호가 올바르지 않습니다.</span>
+    <span class="warning login" rel="loginWarning">이메일 혹은 비밀번호가 올바르지 않습니다.</span>
     <label class="_object-check-wrapper">
         <input class="_check-input" name="rememberEmail" type="checkbox">
         <span class="_check-toggle"></span>
         <span class="_check-text">이메일을 기억합니다.</span>
     </label>
     <div class="button-container">
-        <input class="_object-button" name="cancelButton" type="button" value="취소" data-method="hideLogin">
+        <input class="_object-button" name="cancel" type="button" value="취소" data-method="hideLogin">
         <input class="_object-button _color-concept" type="submit" value="로그인">
     </div>
     <ul class="menu">
         <li class="item">
             <span class="text">아직 계정이 없으신가요?</span>
-            <a href="#" class="link" data-method="showRegister">회원가입</a>
+            <a class="link" href="#" data-action="showRegister">회원가입</a>
         </li>
         <li class="item">
             <span class="text">이메일 혹은 비밀번호를 분실하셨나요?</span>
-            <a href="#" class="link" data-method="showRecover">계정 복구</a>
+            <a class="link" href="#" data-action="showRecover">계정 복구</a>
         </li>
     </ul>
 </form>
-<form id="registerForm" class="visible">
+<form id="registerForm">
     <section class="section step-1">
         <div class="title-container">
             <h2 class="title">회원가입</h2>
@@ -57,9 +59,7 @@
         </div>
         <div class="content-container">
             <label class="label term-container">
-                <textarea readonly class="_object-input term">
-                    서비스 이용약관
-                </textarea>
+                <textarea readonly class="_object-input term">서비스 이용 약관</textarea>
             </label>
             <label class="_object-check-wrapper">
                 <input class="_check-input" name="agreeServiceTerm" type="checkbox">
@@ -67,9 +67,7 @@
                 <span class="text">위 서비스 이용약관을 읽어보았고 이해하였으며 동의합니다.</span>
             </label>
             <label class="label term-container">
-                <textarea readonly class="_object-input term">
-                    개인정보 처리방침
-                </textarea>
+                <textarea readonly class="_object-input term">개인정보 처리방침</textarea>
             </label>
             <label class="_object-check-wrapper">
                 <input class="_check-input" name="agreePrivacyTerm" type="checkbox">
@@ -79,7 +77,7 @@
             <span class="warning term" rel="termWarning"></span>
         </div>
         <div class="button-container">
-            <input class="_object-button" name="cancel" type="button" value="취소" data-method="hideRegister">
+            <input class="_object-button" name="cancel" type="button" value="취소">
             <input class="_object-button _color-concept" type="submit" value="다음">
         </div>
     </section>
@@ -94,31 +92,29 @@
             </label>
             <span class="warning email" rel="emailWarning"></span>
             <label class="label">
-                <input class="_object-input" maxlength="50" name="password" type="password"
-                       placeholder="비밀번호(8자 이상 50자 이하)">
+                <input class="_object-input" maxlength="50" name="password" placeholder="비밀번호 (8자 이상 50자 이하)" type="password">
             </label>
             <label class="label">
-                <input class="_object-input" maxlength="50" name="passwordCheck" type="password" placeholder="비밀번호 확인">
+                <input class="_object-input" maxlength="50" name="passwordCheck" placeholder="비밀번호 확인" type="password">
             </label>
             <span class="warning password" rel="passwordWarning"></span>
             <label class="label">
-                <input class="_object-input" maxlength="10" name="nickname" placeholder="별명 (2자 이상 10자 이하 완성 한글)"
-                       type="text">
+                <input class="_object-input" maxlength="10" name="nickname" placeholder="별명 (2자 이상 10자 이하 완성 한글)" type="text">
             </label>
             <span class="warning nickname" rel="nicknameWarning"></span>
             <label class="label">
-                <input class="_object-input" maxlength="12" placeholder="연락처 ('-' 없이 입력)" type="text" name="contact">
+                <input class="_object-input" maxlength="12" name="contact" placeholder="연락처 ('-' 없이 입력)" type="text">
                 <input class="_object-button" name="contactSend" type="button" value="인증번호 전송">
             </label>
             <label class="label">
-                <input disabled class="_object-input" maxlength="6" placeholder="인증번호" type="text" name="contactCode">
+                <input disabled class="_object-input" maxlength="6" name="contactCode" placeholder="인증번호" type="text">
                 <input disabled class="_object-button" name="contactVerify" type="button" value="인증번호 확인">
             </label>
             <input hidden name="contactSalt" type="hidden">
             <span class="warning contact" rel="contactWarning"></span>
         </div>
         <div class="button-container">
-            <input class="_object-button" name="cancel" type="button" value="취소" data-method="hideRegister">
+            <input class="_object-button" name="cancel" type="button" value="취소">
             <input class="_object-button _color-concept" type="submit" value="다음">
         </div>
     </section>
@@ -127,20 +123,17 @@
             <h2 class="title">회원가입</h2>
             <h3 class="subtitle">회원가입 완료</h3>
         </div>
-        <div class="content-container">
-            입력하신 이메일로 계정 인증을 위한 링크가 담긴 메일을 전송하였습니다. 이메일 인증을 완료한 후 로그인 및 서비스 이용이 가능합니다.<br><br>전송된 링크는 1시간 동안 유효함으로
-            유의해주시기 바랍니다.
-        </div>
+        <div class="content-container">입력하신 이메일로 계정 인증을 위한 링크가 담긴 메일을 전송하였습니다. 이메일 인증을 완료한 후 로그인 및 서비스 이용이 가능합니다.<br><br>전송된 링크는 1시간 동안 유효함으로 유의해주시기 바랍니다.</div>
         <div class="button-container">
             <input class="_object-button _color-concept" type="submit" value="완료">
         </div>
     </section>
 </form>
-<form id="recoverForm" class="visible">
+<form id="recoverForm">
     <h2 class="title">계정 복구</h2>
     <div class="option-container">
         <label class="label email">
-            <input class="option " name="option" type="radio" value="email">
+            <input checked class="option" name="option" type="radio" value="email">
             <span class="text">이메일 찾기</span>
         </label>
         <label class="label password">
@@ -150,11 +143,11 @@
     </div>
     <div class="field email-container">
         <label class="label">
-            <input class="_object-input" maxlength="12" placeholder="연락처 ('-' 없이 입력)" type="text" name="eContact">
+            <input class="_object-input" maxlength="12" name="eContact" placeholder="연락처 ('-' 없이 입력)" type="text">
             <input class="_object-button" name="eContactSend" type="button" value="인증번호 전송">
         </label>
         <label class="label">
-            <input disabled class="_object-input" maxlength="6" placeholder="인증번호" type="text" name="eContactCode">
+            <input disabled class="_object-input" maxlength="6" name="eContactCode" placeholder="인증번호" type="text">
             <input disabled class="_object-button" name="eContactVerify" type="button" value="인증번호 확인">
         </label>
         <input hidden name="eContactSalt" type="hidden">
@@ -166,13 +159,13 @@
     </div>
     <span class="warning" rel="warning"></span>
     <div class="button-container">
-        <input class="_object-button" name="cancel" type="button" value="취소" data-method="hideRegister">
+        <input class="_object-button" name="cancel" type="button" value="취소">
         <input class="_object-button _color-concept" type="submit" value="다음">
     </div>
 </form>
 <ul id="menu">
     <li class="item logo-container">
-        <img class="logo" alt="" th:src="@{/resources/images/shortcut_icon.png}">
+        <img alt="" class="logo" th:src="@{/resources/images/shortcut_icon.png}">
     </li>
     <li class="item link selected">
         <img alt="" class="icon" th:src="@{/resources/images/menu-main.png}">
@@ -183,19 +176,16 @@
         <span class="text">즐겨찾기</span>
     </li>
     <li class="stretch"></li>
-    <li class="item link" data-method="showLogin">
-        <img alt="" class="icon"
-             th:src="@{/resources/images/menu-login.png}">
+    <li class="item link" data-action="showLogin" th:if="${session.user==null}">
+        <img alt="" class="icon" th:src="@{/resources/images/menu-login.png}">
         <span class="text">로그인</span>
     </li>
-    <li class="item link" data-method="logout">
-        <img alt="" class="icon"
-             th:src="@{/resources/images/menu-logout.png}">
+    <li class="item link" data-action="logout" th:if="${session.user != null}">
+        <img alt="" class="icon" th:src="@{/resources/images/menu-logout.png}">
         <span class="text">로그아웃</span>
     </li>
-    <li class="item link">
-        <img alt="" class="icon"
-             th:src="@{/resources/images/menu-my.png}">
+    <li class="item link" th:if="${session.user != null}">
+        <img alt="" class="icon" th:src="@{/resources/images/menu-my.png}">
         <span class="text">마이페이지</span>
     </li>
 </ul>
@@ -210,7 +200,6 @@
         <span class="text gu" rel="addressGu">중구</span>
         <span class="text dong" rel="addressDong">성내1동</span>
     </div>
-
     <ul class="list">
         <li class="item">
             <div class="spec-container">
@@ -227,8 +216,7 @@
                 </div>
             </div>
             <div class="image-container">
-                <img alt="" class="image"
-                     src="https://mblogthumb-phinf.pstatic.net/MjAxODEyMDhfMTc0/MDAxNTQ0MjM4MTQ5MDQ2.AMnM0wh58PwdAPC4Wk5k1IGlBD6eH1loUgSRorMiFl0g.eHQmfl0gLlfiN4i-FjfA8XJI2aldGUaImxlAaYyyxi8g.JPEG.engh1698/2018-12-06-12-50-32.jpg?type=w800">
+                <img alt="" class="image" src="https://mblogthumb-phinf.pstatic.net/MjAxODEyMDhfMTc0/MDAxNTQ0MjM4MTQ5MDQ2.AMnM0wh58PwdAPC4Wk5k1IGlBD6eH1loUgSRorMiFl0g.eHQmfl0gLlfiN4i-FjfA8XJI2aldGUaImxlAaYyyxi8g.JPEG.engh1698/2018-12-06-12-50-32.jpg?type=w800">
                 <span class="count">4</span>
             </div>
         </li>
@@ -247,8 +235,7 @@
                 </div>
             </div>
             <div class="image-container">
-                <img alt="" class="image"
-                     src="https://mblogthumb-phinf.pstatic.net/MjAxODEyMDhfMTc0/MDAxNTQ0MjM4MTQ5MDQ2.AMnM0wh58PwdAPC4Wk5k1IGlBD6eH1loUgSRorMiFl0g.eHQmfl0gLlfiN4i-FjfA8XJI2aldGUaImxlAaYyyxi8g.JPEG.engh1698/2018-12-06-12-50-32.jpg?type=w800">
+                <img alt="" class="image" src="https://mblogthumb-phinf.pstatic.net/MjAxODEyMDhfMTc0/MDAxNTQ0MjM4MTQ5MDQ2.AMnM0wh58PwdAPC4Wk5k1IGlBD6eH1loUgSRorMiFl0g.eHQmfl0gLlfiN4i-FjfA8XJI2aldGUaImxlAaYyyxi8g.JPEG.engh1698/2018-12-06-12-50-32.jpg?type=w800">
                 <span class="count">4</span>
             </div>
         </li>
@@ -267,8 +254,7 @@
                 </div>
             </div>
             <div class="image-container">
-                <img alt="" class="image"
-                     src="https://mblogthumb-phinf.pstatic.net/MjAxODEyMDhfMTc0/MDAxNTQ0MjM4MTQ5MDQ2.AMnM0wh58PwdAPC4Wk5k1IGlBD6eH1loUgSRorMiFl0g.eHQmfl0gLlfiN4i-FjfA8XJI2aldGUaImxlAaYyyxi8g.JPEG.engh1698/2018-12-06-12-50-32.jpg?type=w800">
+                <img alt="" class="image" src="https://mblogthumb-phinf.pstatic.net/MjAxODEyMDhfMTc0/MDAxNTQ0MjM4MTQ5MDQ2.AMnM0wh58PwdAPC4Wk5k1IGlBD6eH1loUgSRorMiFl0g.eHQmfl0gLlfiN4i-FjfA8XJI2aldGUaImxlAaYyyxi8g.JPEG.engh1698/2018-12-06-12-50-32.jpg?type=w800">
                 <span class="count">4</span>
             </div>
         </li>
@@ -287,8 +273,7 @@
                 </div>
             </div>
             <div class="image-container">
-                <img alt="" class="image"
-                     src="https://mblogthumb-phinf.pstatic.net/MjAxODEyMDhfMTc0/MDAxNTQ0MjM4MTQ5MDQ2.AMnM0wh58PwdAPC4Wk5k1IGlBD6eH1loUgSRorMiFl0g.eHQmfl0gLlfiN4i-FjfA8XJI2aldGUaImxlAaYyyxi8g.JPEG.engh1698/2018-12-06-12-50-32.jpg?type=w800">
+                <img alt="" class="image" src="https://mblogthumb-phinf.pstatic.net/MjAxODEyMDhfMTc0/MDAxNTQ0MjM4MTQ5MDQ2.AMnM0wh58PwdAPC4Wk5k1IGlBD6eH1loUgSRorMiFl0g.eHQmfl0gLlfiN4i-FjfA8XJI2aldGUaImxlAaYyyxi8g.JPEG.engh1698/2018-12-06-12-50-32.jpg?type=w800">
                 <span class="count">4</span>
             </div>
         </li>
@@ -307,8 +292,7 @@
                 </div>
             </div>
             <div class="image-container">
-                <img alt="" class="image"
-                     src="https://mblogthumb-phinf.pstatic.net/MjAxODEyMDhfMTc0/MDAxNTQ0MjM4MTQ5MDQ2.AMnM0wh58PwdAPC4Wk5k1IGlBD6eH1loUgSRorMiFl0g.eHQmfl0gLlfiN4i-FjfA8XJI2aldGUaImxlAaYyyxi8g.JPEG.engh1698/2018-12-06-12-50-32.jpg?type=w800">
+                <img alt="" class="image" src="https://mblogthumb-phinf.pstatic.net/MjAxODEyMDhfMTc0/MDAxNTQ0MjM4MTQ5MDQ2.AMnM0wh58PwdAPC4Wk5k1IGlBD6eH1loUgSRorMiFl0g.eHQmfl0gLlfiN4i-FjfA8XJI2aldGUaImxlAaYyyxi8g.JPEG.engh1698/2018-12-06-12-50-32.jpg?type=w800">
                 <span class="count">4</span>
             </div>
         </li>
@@ -327,135 +311,20 @@
                 </div>
             </div>
             <div class="image-container">
-                <img alt="" class="image"
-                     src="https://mblogthumb-phinf.pstatic.net/MjAxODEyMDhfMTc0/MDAxNTQ0MjM4MTQ5MDQ2.AMnM0wh58PwdAPC4Wk5k1IGlBD6eH1loUgSRorMiFl0g.eHQmfl0gLlfiN4i-FjfA8XJI2aldGUaImxlAaYyyxi8g.JPEG.engh1698/2018-12-06-12-50-32.jpg?type=w800">
-                <span class="count">4</span>
-            </div>
-        </li>
-        <li class="item">
-            <div class="spec-container">
-                <div class="name-container">
-                    <span class="name">용정반점</span>
-                    <span class="category">중화음식</span>
-                </div>
-                <div class="op-container">
-                    <span class="op-flag">영업 중</span>
-                    <span class="op-time">20:00에 영업 종료</span>
-                </div>
-                <div class="address-container">
-                    <span class="address">대구 중구 덕산동</span>
-                </div>
-            </div>
-            <div class="image-container">
-                <img alt="" class="image"
-                     src="https://mblogthumb-phinf.pstatic.net/MjAxODEyMDhfMTc0/MDAxNTQ0MjM4MTQ5MDQ2.AMnM0wh58PwdAPC4Wk5k1IGlBD6eH1loUgSRorMiFl0g.eHQmfl0gLlfiN4i-FjfA8XJI2aldGUaImxlAaYyyxi8g.JPEG.engh1698/2018-12-06-12-50-32.jpg?type=w800">
-                <span class="count">4</span>
-            </div>
-        </li>
-        <li class="item">
-            <div class="spec-container">
-                <div class="name-container">
-                    <span class="name">용정반점</span>
-                    <span class="category">중화음식</span>
-                </div>
-                <div class="op-container">
-                    <span class="op-flag">영업 중</span>
-                    <span class="op-time">20:00에 영업 종료</span>
-                </div>
-                <div class="address-container">
-                    <span class="address">대구 중구 덕산동</span>
-                </div>
-            </div>
-            <div class="image-container">
-                <img alt="" class="image"
-                     src="https://mblogthumb-phinf.pstatic.net/MjAxODEyMDhfMTc0/MDAxNTQ0MjM4MTQ5MDQ2.AMnM0wh58PwdAPC4Wk5k1IGlBD6eH1loUgSRorMiFl0g.eHQmfl0gLlfiN4i-FjfA8XJI2aldGUaImxlAaYyyxi8g.JPEG.engh1698/2018-12-06-12-50-32.jpg?type=w800">
-                <span class="count">4</span>
-            </div>
-        </li>
-        <li class="item">
-            <div class="spec-container">
-                <div class="name-container">
-                    <span class="name">용정반점</span>
-                    <span class="category">중화음식</span>
-                </div>
-                <div class="op-container">
-                    <span class="op-flag">영업 중</span>
-                    <span class="op-time">20:00에 영업 종료</span>
-                </div>
-                <div class="address-container">
-                    <span class="address">대구 중구 덕산동</span>
-                </div>
-            </div>
-            <div class="image-container">
-                <img alt="" class="image"
-                     src="https://mblogthumb-phinf.pstatic.net/MjAxODEyMDhfMTc0/MDAxNTQ0MjM4MTQ5MDQ2.AMnM0wh58PwdAPC4Wk5k1IGlBD6eH1loUgSRorMiFl0g.eHQmfl0gLlfiN4i-FjfA8XJI2aldGUaImxlAaYyyxi8g.JPEG.engh1698/2018-12-06-12-50-32.jpg?type=w800">
-                <span class="count">4</span>
-            </div>
-        </li>
-        <li class="item">
-            <div class="spec-container">
-                <div class="name-container">
-                    <span class="name">용정반점</span>
-                    <span class="category">중화음식</span>
-                </div>
-                <div class="op-container">
-                    <span class="op-flag">영업 중</span>
-                    <span class="op-time">20:00에 영업 종료</span>
-                </div>
-                <div class="address-container">
-                    <span class="address">대구 중구 덕산동</span>
-                </div>
-            </div>
-            <div class="image-container">
-                <img alt="" class="image"
-                     src="https://mblogthumb-phinf.pstatic.net/MjAxODEyMDhfMTc0/MDAxNTQ0MjM4MTQ5MDQ2.AMnM0wh58PwdAPC4Wk5k1IGlBD6eH1loUgSRorMiFl0g.eHQmfl0gLlfiN4i-FjfA8XJI2aldGUaImxlAaYyyxi8g.JPEG.engh1698/2018-12-06-12-50-32.jpg?type=w800">
-                <span class="count">4</span>
-            </div>
-        </li>
-        <li class="item">
-            <div class="spec-container">
-                <div class="name-container">
-                    <span class="name">용정반점</span>
-                    <span class="category">중화음식</span>
-                </div>
-                <div class="op-container">
-                    <span class="op-flag">영업 중</span>
-                    <span class="op-time">20:00에 영업 종료</span>
-                </div>
-                <div class="address-container">
-                    <span class="address">대구 중구 덕산동</span>
-                </div>
-            </div>
-            <div class="image-container">
-                <img alt="" class="image"
-                     src="https://mblogthumb-phinf.pstatic.net/MjAxODEyMDhfMTc0/MDAxNTQ0MjM4MTQ5MDQ2.AMnM0wh58PwdAPC4Wk5k1IGlBD6eH1loUgSRorMiFl0g.eHQmfl0gLlfiN4i-FjfA8XJI2aldGUaImxlAaYyyxi8g.JPEG.engh1698/2018-12-06-12-50-32.jpg?type=w800">
-                <span class="count">4</span>
-            </div>
-        </li>
-        <li class="item">
-            <div class="spec-container">
-                <div class="name-container">
-                    <span class="name">용정반점</span>
-                    <span class="category">중화음식</span>
-                </div>
-                <div class="op-container">
-                    <span class="op-flag">영업 중</span>
-                    <span class="op-time">20:00에 영업 종료</span>
-                </div>
-                <div class="address-container">
-                    <span class="address">대구 중구 덕산동</span>
-                </div>
-            </div>
-            <div class="image-container">
-                <img alt="" class="image"
-                     src="https://mblogthumb-phinf.pstatic.net/MjAxODEyMDhfMTc0/MDAxNTQ0MjM4MTQ5MDQ2.AMnM0wh58PwdAPC4Wk5k1IGlBD6eH1loUgSRorMiFl0g.eHQmfl0gLlfiN4i-FjfA8XJI2aldGUaImxlAaYyyxi8g.JPEG.engh1698/2018-12-06-12-50-32.jpg?type=w800">
+                <img alt="" class="image" src="https://mblogthumb-phinf.pstatic.net/MjAxODEyMDhfMTc0/MDAxNTQ0MjM4MTQ5MDQ2.AMnM0wh58PwdAPC4Wk5k1IGlBD6eH1loUgSRorMiFl0g.eHQmfl0gLlfiN4i-FjfA8XJI2aldGUaImxlAaYyyxi8g.JPEG.engh1698/2018-12-06-12-50-32.jpg?type=w800">
                 <span class="count">4</span>
             </div>
         </li>
     </ul>
-
 </section>
 <section id="detail">디테일 자리</section>
 <section id="map">지도 자리</section>
 </body>
 </html>
+
+
+
+
+
+
+

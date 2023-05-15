@@ -30,13 +30,13 @@ public class UserController {
     }
 
     @RequestMapping(value = "emailCode",
-    method = RequestMethod.GET,
-    produces = MediaType.TEXT_HTML_VALUE)
+            method = RequestMethod.GET,
+            produces = MediaType.TEXT_HTML_VALUE)
     public ModelAndView getEmailCode(RegisterEmailCodeEntity registerEmailCode) {
         VerifyRegisterEmailCodeResult result = this.userService.verifyRegisterEmailCode(registerEmailCode);
-        return new ModelAndView(){{
+        return new ModelAndView() {{
             setViewName("user/emailCode");
-           addObject("result",result.name());
+            addObject("result", result.name());
         }};
     }
 
@@ -57,10 +57,10 @@ public class UserController {
 
 
     @RequestMapping(value = "emailCount",
-    method = RequestMethod.GET,
-    produces = MediaType.APPLICATION_JSON_VALUE)
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public String getEmailCount(@RequestParam(value = "email")String email) {
+    public String getEmailCount(@RequestParam(value = "email") String email) {
         CheckEmailResult result = this.userService.checkEmailResult(email);
         JSONObject responseObject = new JSONObject() {{
             put("result", result.name().toLowerCase());
@@ -68,11 +68,11 @@ public class UserController {
         return responseObject.toString();
     }
 
-    @RequestMapping(value ="nicknameCount",
-    method = RequestMethod.GET,
-    produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "nicknameCount",
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public String getNicknameCount(@RequestParam(value = "nickname")String nickname){
+    public String getNicknameCount(@RequestParam(value = "nickname") String nickname) {
         CheckNicknameResult result = this.userService.checkNicknameResult(nickname);
         JSONObject responseObject = new JSONObject() {{
             put("result", result.name().toLowerCase());
@@ -81,12 +81,12 @@ public class UserController {
     }
 
 
-//   ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ
+    //   ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ
     @RequestMapping(value = "contactCodeRec",
-    method = RequestMethod.GET,
-    produces = MediaType.APPLICATION_JSON_VALUE)
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public String getContactCodeRec(RecoverContactCodeEntity recoverContactCode){
+    public String getContactCodeRec(RecoverContactCodeEntity recoverContactCode) {
         SendRecoverContactCodeResult result = this.userService.sendRecoverContactCode(recoverContactCode);
         JSONObject responseObject = new JSONObject() {{
             put("result", result.name().toLowerCase());
@@ -97,15 +97,31 @@ public class UserController {
         return responseObject.toString();
     }
 
-    @RequestMapping(value = "contactCodeRec",
-    method = RequestMethod.PATCH,
+    @RequestMapping(value = "logout",
+    method = RequestMethod.GET,
     produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public String patchContactCodeRec(RecoverContactCodeEntity recoverContactCode){
-        VerifyRecoverContactCodeResult result = this.userService.verifyRecoverContactCode(recoverContactCode);
+    public ModelAndView getLogout(HttpSession session){
+        ModelAndView modelAndView = new ModelAndView("redirect:/");
+        session.setAttribute("user",null);
+        return modelAndView;
+    }
+
+//    dd
+
+    @RequestMapping(value = "contactCodeRec",
+            method = RequestMethod.PATCH,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public String patchContactCodeRec(RecoverContactCodeEntity recoverContactCode) {
+        VerifyRecoverContactCodeResult result = this.userService.recoverContactCodeResult(recoverContactCode);
         JSONObject responseObject = new JSONObject() {{
             put("result", result.name().toLowerCase());
         }};
+        if (result == VerifyRecoverContactCodeResult.SUCCESS) {
+            UserEntity user = this.userService.getUserByContact(recoverContactCode.getContact());
+            responseObject.put("email", user.getEmail());
+        }
         return responseObject.toString();
     }
 
@@ -120,13 +136,14 @@ public class UserController {
         }};
         return responseObject.toString();
     }
+
     @RequestMapping(value = "register",
-    method = RequestMethod.POST,
-    produces = MediaType.APPLICATION_JSON_VALUE)
+            method = RequestMethod.POST,
+            produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public String postRegister(UserEntity user,
                                RegisterContactCodeEntity registerContactCode) throws MessagingException {
-        RegisterResult result = this.userService.register(user,registerContactCode);
+        RegisterResult result = this.userService.register(user, registerContactCode);
         JSONObject responseObject = new JSONObject() {{
             put("result", result.name().toLowerCase());
         }};
@@ -134,21 +151,20 @@ public class UserController {
     }
 
     @RequestMapping(value = "login",
-    method = RequestMethod.POST,
-    produces = MediaType.APPLICATION_JSON_VALUE)
+            method = RequestMethod.POST,
+            produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public String postLogin(HttpSession session, UserEntity user){
+    public String postLogin(HttpSession session, UserEntity user) {
         LoginResult result = this.userService.login(user);
-        if (result == LoginResult.SUCCESS){
-            session.setAttribute("user",user);
+        if (result == LoginResult.SUCCESS) {
+            session.setAttribute("user", user);
         }
-        JSONObject responseObject = new JSONObject(){{
-            put("result",result.name().toLowerCase());
+        JSONObject responseObject = new JSONObject() {{
+            put("result", result.name().toLowerCase());
         }};
 
         return responseObject.toString();
     }
-
 
 
 }
