@@ -193,6 +193,160 @@ body {
     pointer-events: all;
 }
 
+#addForm {
+    top: 0;
+    left: -2rem;
+    width: 24rem;
+    height: 100vh;
+    background-color: #f0f0f0;
+    box-shadow: 0 0 1rem 0.0625rem #00000010;
+    opacity: 0;
+    overflow: hidden auto;
+    pointer-events: none;
+    position: fixed;
+    transition-duration: 250ms;
+    transition-property: left, opacity;
+    transition-timing-function: ease;
+    z-index: 2;
+
+    align-items: stretch;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+#addForm.visible {
+    left: 0;
+    opacity: 1;
+    pointer-events: all;
+}
+
+#addForm .label {
+    align-items: stretch;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+#addForm > .title {
+    top: 0;
+    background-color: #ffffff60;
+    backdrop-filter: blur(0.5rem);
+    border-bottom: 0.0625rem solid #e0e0e0;
+    font-size: 1.5rem;
+    padding: 1rem 1.5rem;
+    position: sticky;
+}
+
+#addForm > .box {
+    background-color: #ffffff;
+    border-radius: 0.5rem;
+    margin: 1rem;
+    padding: 1rem;
+
+    align-items: stretch;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+#addForm > .box + .box {
+    margin-top: unset;
+}
+
+#addForm > .box > * + * {
+    margin-top: 0.5rem;
+}
+
+#addForm > .box > .title {
+    font-size: 1.25rem;
+}
+
+#addForm > .box.fundamental > .coords-container > * + *,
+#addForm > .box.fundamental > .address-container > * + * {
+    margin-top: 0.5rem;
+}
+
+#addForm > .box.fundamental > .contact-container {
+    display: grid;
+    gap: 0.5rem;
+    grid-template-columns: repeat(3, minmax(0, auto));
+}
+
+#addForm > .box.fundamental > .label.description > textarea {
+    min-height: 7.5rem;
+    max-height: 20rem;
+    resize: vertical;
+}
+
+#addForm > .box.time > .time-table label:has(> input[type="checkbox"]) {
+    padding-right: 1rem;
+}
+
+#addForm > .box.time > .time-table input[type="checkbox"][name="opSun"] ~ .text {
+    color: #ef5350;
+}
+
+#addForm > .box.time > .time-table input[type="checkbox"][name="opSat"] ~ .text {
+    color: #0288d1;
+}
+
+#addForm > .box.time > .time-table input[type="time"] {
+    width: 7.5rem;
+    box-sizing: border-box;
+    padding: 0.625rem 0.25rem 0.625rem 0.75rem;
+}
+
+#addForm > .box.thumbnail > .preview {
+    aspect-ratio: 1/1;
+    background-color: #fafafa;
+    border: 0.0625rem solid #e0e0e0;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    user-select: none;
+
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#addForm > .box.thumbnail > .preview > .empty {
+    display: none;
+}
+
+#addForm > .box.thumbnail > .preview > .empty.visible {
+    display: inline-block;
+}
+
+#addForm > .box.thumbnail > input[type="file"] {
+    display: none;
+}
+
+#addForm > .button-container {
+    bottom: 0;
+    width: 100%;
+    background-color: #ffffff60;
+    backdrop-filter: blur(0.5rem);
+    border-top: 0.0625rem solid #e0e0e0;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, auto));
+    position: sticky;
+}
+
+#addForm > .button-container > .button {
+    cursor: pointer;
+    padding: 0.75rem 1rem;
+}
+
+#addForm > .button-container > .button + .button {
+    border-left: 0.0625rem solid #e0e0e0;
+}
+
+#addForm > .button-container > .button:hover {
+    color: #0288d1;
+}
+
 #menu {
     width: 4rem;
     border-right: 0.0625rem solid #eeeeee;
@@ -665,13 +819,35 @@ body {
     justify-content: flex-start;
 }
 
-#list > .list::-webkit-scrollbar {
+*::-webkit-scrollbar {
     width: 0.375rem;
     background-color: #fafafa;
 }
 
-#list > .list::-webkit-scrollbar-thumb {
+*::-webkit-scrollbar-thumb {
     background-color: #bdbdbd;
+}
+
+#list > .list > .control {
+    top: 0;
+    background-color: #ffffffa0;
+    backdrop-filter: blur(0.5rem);
+    border-bottom: 0.0625rem solid #e0e0e0;
+    display: grid;
+    grid-auto-flow: column;
+    position: sticky;
+    z-index: 1;
+}
+
+#list > .list > .control > .item {
+    cursor: pointer;
+    padding: 0.625rem 1rem;
+    text-align: center;
+    user-select: none;
+}
+
+#list > .list > .control > .item:hover {
+    color: #0288d1;
 }
 
 #list > .list > .item {
@@ -776,6 +952,67 @@ body {
 
 #map {
     flex: 1;
+    position: relative;
+}
+
+#map > [rel="pin"] {
+    top: 50%;
+    left: 50%;
+    background-color: #FFC72AC0;
+    border-radius: 50%;
+    display: none;
+    padding: 0.25rem;
+    pointer-events: none;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    z-index: 999999;
+}
+
+#map.pinning > [rel="pin"] {
+    display: block;
+}
+
+#map > [rel="pinEffect"] {
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border: 0.25rem solid #FFC72AC0;
+    border-radius: 50%;
+    display: none;
+    pointer-events: none;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    z-index: 999999;
+
+    animation-name: map-pin-effect-animation;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease;
+    animation-duration: 2.5s;
+}
+
+#map.pinning > [rel="pinEffect"] {
+    display: block;
+}
+
+#map > [rel="pinEffect"]:nth-of-type(2) {
+    animation-delay: 0.75s;
+}
+
+#map.pinning > [rel="cover"] {
+    display: block;
+}
+
+#map > [rel="cover"] {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #00000060;
+    display: none;
+    pointer-events: none;
+    position: absolute;
+    z-index: 999998;
 }
 
 @keyframes cover-logo-animation {
@@ -787,7 +1024,25 @@ body {
     }
 }
 
+@keyframes map-pin-effect-animation {
+    0% {
+        width: 0;
+        height: 0;
+        opacity: 100%;
+    }
 
+    50% {
+        width: 20rem;
+        height: 20rem;
+        opacity: 0;
+    }
+
+    100% {
+        width: 20rem;
+        height: 20rem;
+        opacity: 0;
+    }
+}
 
 
 

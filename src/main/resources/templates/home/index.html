@@ -9,6 +9,7 @@
     <link rel="shortcut icon" th:href="@{/resources/images/shortcut_icon.png}">
     <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=3548a11ff0aa203fb300e1a908d69de3&libraries=services,clusterer,drawing"></script>
     <script defer th:src="@{/resources/scripts/common.js}"></script>
+    <script defer th:src="@{/resources/scripts/index.add.js}"></script>
     <script defer th:src="@{/resources/scripts/index.login.js}"></script>
     <script defer th:src="@{/resources/scripts/index.map.js}"></script>
     <script defer th:src="@{/resources/scripts/index.recover.js}"></script>
@@ -163,6 +164,218 @@
         <input class="_object-button _color-concept" type="submit" value="다음">
     </div>
 </form>
+<form id="addForm">
+    <h2 class="title">맛집 추가</h2>
+    <div class="box fundamental">
+        <h3 class="title">기본 정보</h3>
+        <label class="label">
+            <input class="_object-input" maxlength="50" name="name" placeholder="맛집 이름" type="text">
+        </label>
+        <label class="label contact-container">
+            <select class="_object-input" name="contactFirst">
+                <option disabled hidden selected value="">지역번호</option>
+                <option value="02">(02) 서울</option>
+                <option value="031">(031) 경기도</option>
+                <option value="032">(032) 인천광역시, 부천시</option>
+                <option value="033">(033) 강원도</option>
+                <option value="041">(041) 충청남도</option>
+                <option value="042">(042) 대전광역시, 계룡시</option>
+                <option value="043">(043) 충청북도</option>
+                <option value="044">(044) 세종특별자치시</option>
+                <option value="051">(051) 부산광역시</option>
+                <option value="052">(052) 울산광역시</option>
+                <option value="053">(053) 대구광역시</option>
+                <option value="054">(054) 경상북도</option>
+                <option value="055">(055) 경상남도</option>
+                <option value="061">(061) 전라남도</option>
+                <option value="062">(062) 광주광역시</option>
+                <option value="063">(063) 전라북도</option>
+                <option value="064">(064) 제주특별자치도</option>
+            </select>
+            <input class="_object-input" maxlength="4" name="contactSecond" placeholder="연락처" type="text">
+            <input class="_object-input" maxlength="4" name="contactThird" placeholder="연락처" type="text">
+        </label>
+        <label class="label description">
+            <textarea class="_object-input" name="description" placeholder="맛집 설명을 입력해 주세요."></textarea>
+        </label>
+        <div class="coords-container">
+            <span class="message">우측 지도의 중심을 맛집 위치로 움직여 주세요.</span>
+            <label class="label">
+                <input readonly class="_object-input" maxlength="50" name="lat" placeholder="경도" type="text">
+            </label>
+            <label class="label">
+                <input readonly class="_object-input" maxlength="50" name="lng" placeholder="위도" type="text">
+            </label>
+        </div>
+        <div class="address-container">
+            <span class="message">기본 주소는 자동으로 완성됩니다.</span>
+            <label class="label">
+                <input readonly class="_object-input" maxlength="100" name="addressPrimary" placeholder="기본 주소" type="text">
+            </label>
+            <label class="label">
+                <input class="_object-input" maxlength="100" name="addressSecondary" placeholder="상세 주소" type="text">
+            </label>
+        </div>
+    </div>
+    <div class="box thumbnail">
+        <h3 class="title">대표 이미지</h3>
+        <div class="preview">
+            <span class="empty visible" rel="emptyThumbnail">대표 이미지를 선택해 주세요.</span>
+        </div>
+        <input accept="image/*" name="thumbnail" type="file">
+    </div>
+    <div class="box time">
+        <h3 class="title">영업 시간</h3>
+        <table class="time-table">
+            <thead>
+            <tr>
+                <th>요일</th>
+                <th>오픈</th>
+                <th>마감</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    <label class="_object-check-wrapper">
+                        <input checked class="_check-input" name="opSun" type="checkbox">
+                        <span class="_check-toggle"></span>
+                        <span class="text">일</span>
+                    </label>
+                </td>
+                <td>
+                    <label class="label">
+                        <input class="_object-input" name="openSun" type="time">
+                    </label>
+                </td>
+                <td>
+                    <label class="label">
+                        <input class="_object-input" name="closeSun" type="time">
+                    </label>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label class="_object-check-wrapper">
+                        <input checked class="_check-input" name="opMon" type="checkbox">
+                        <span class="_check-toggle"></span>
+                        <span class="text">월</span>
+                    </label>
+                </td>
+                <td>
+                    <label class="label">
+                        <input class="_object-input" name="openMon" type="time">
+                    </label>
+                </td>
+                <td>
+                    <label class="label">
+                        <input class="_object-input" name="closeMon" type="time">
+                    </label>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label class="_object-check-wrapper">
+                        <input checked class="_check-input" name="opTue" type="checkbox">
+                        <span class="_check-toggle"></span>
+                        <span class="text">화</span>
+                    </label>
+                </td>
+                <td>
+                    <label class="label">
+                        <input class="_object-input" name="openTue" type="time">
+                    </label>
+                </td>
+                <td>
+                    <label class="label">
+                        <input class="_object-input" name="closeTue" type="time">
+                    </label>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label class="_object-check-wrapper">
+                        <input checked class="_check-input" name="opWed" type="checkbox">
+                        <span class="_check-toggle"></span>
+                        <span class="text">수</span>
+                    </label>
+                </td>
+                <td>
+                    <label class="label">
+                        <input class="_object-input" name="openWed" type="time">
+                    </label>
+                </td>
+                <td>
+                    <label class="label">
+                        <input class="_object-input" name="closeWed" type="time">
+                    </label>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label class="_object-check-wrapper">
+                        <input checked class="_check-input" name="opThu" type="checkbox">
+                        <span class="_check-toggle"></span>
+                        <span class="text">목</span>
+                    </label>
+                </td>
+                <td>
+                    <label class="label">
+                        <input class="_object-input" name="openThu" type="time">
+                    </label>
+                </td>
+                <td>
+                    <label class="label">
+                        <input class="_object-input" name="closeThu" type="time">
+                    </label>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label class="_object-check-wrapper">
+                        <input checked class="_check-input" name="opFri" type="checkbox">
+                        <span class="_check-toggle"></span>
+                        <span class="text">금</span>
+                    </label>
+                </td>
+                <td>
+                    <label class="label">
+                        <input class="_object-input" name="openFri" type="time">
+                    </label>
+                </td>
+                <td>
+                    <label class="label">
+                        <input class="_object-input" name="closeFri" type="time">
+                    </label>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label class="_object-check-wrapper">
+                        <input checked class="_check-input" name="opSat" type="checkbox">
+                        <span class="_check-toggle"></span>
+                        <span class="text">토</span>
+                    </label>
+                </td>
+                <td>
+                    <label class="label">
+                        <input class="_object-input" name="openSat" type="time">
+                    </label>
+                </td>
+                <td>
+                    <label class="label">
+                        <input class="_object-input" name="closeSat" type="time">
+                    </label>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="button-container">
+        <input class="button" name="cancel" type="button" value="취소">
+        <input class="button" type="submit" value="추가">
+    </div>
+</form>
 <ul id="menu">
     <li class="item logo-container">
         <img alt="" class="logo" th:src="@{/resources/images/shortcut_icon.png}">
@@ -176,7 +389,7 @@
         <span class="text">즐겨찾기</span>
     </li>
     <li class="stretch"></li>
-    <li class="item link" data-action="showLogin" th:if="${session.user==null}">
+    <li class="item link" data-action="showLogin" th:if="${session.user == null}">
         <img alt="" class="icon" th:src="@{/resources/images/menu-login.png}">
         <span class="text">로그인</span>
     </li>
@@ -201,6 +414,9 @@
         <span class="text dong" rel="addressDong">성내1동</span>
     </div>
     <ul class="list">
+        <ul class="control" th:if="${session.user != null}">
+            <li class="item" id="addMatzip">추가</li>
+        </ul>
         <li class="item">
             <div class="spec-container">
                 <div class="name-container">
@@ -318,7 +534,12 @@
     </ul>
 </section>
 <section id="detail">디테일 자리</section>
-<section id="map">지도 자리</section>
+<section id="map">
+    <div rel="pin"></div>
+    <div rel="pinEffect"></div>
+    <div rel="pinEffect"></div>
+    <div rel="cover"></div>
+</section>
 </body>
 </html>
 
