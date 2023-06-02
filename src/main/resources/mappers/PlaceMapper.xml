@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dev.shyoon.matzip.mappers.PlaceMapper">
+<insert id="insertPlace"
+        useGeneratedKeys="true"
+        keyColumn="index"
+        keyProperty="index"
+        parameterType="dev.shyoon.matzip.entities.PlaceEntity">
+    INSERT INTO `matzip`.`places`(`name`,`contact_fist`,`contact_second`,`contact_third`,`description`,`latitude`,`longitude`,`address_primary`,`address_secondary`,`thumbnail`,`thumbnail_mime`,`time`,`registered_by`,`registered_at`,`deleted_flag`)
+    VALUES (#{name},
+            #{contactFirst},
+            #{contactSecond},
+            #{contactThird},
+            #{description},
+            #{latitude},
+            #{longitude},
+            #{addressPrimary},
+            #{addressSecondary},
+            #{thumbnail},
+            #{thumbnailMime},
+            #{time},
+            #{registeredBy},
+            IFNULL(#{registeredAt}, DEFAULT(`registered_at`)),
+            #{isDeleted})
+</insert>
+</mapper>

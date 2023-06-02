@@ -106,19 +106,69 @@ addForm.onsubmit = function (e) {
         return false;
     }
 
-    const dayEn = ['Sun', 'Mon', 'Tue', 'Thu', 'Fri', 'Sat'];
-    const DayKo = ['일', '월', '화', '수', '목', '금', '토'];
+    const dayEn = ['Sun', 'Mon', 'Tue','Wed', 'Thu', 'Fri', 'Sat'];
+    const dayKo = ['일', '월', '화', '수', '목', '금', '토'];
     if (dayEn.every(x => !addForm[`op${x}`].checked)) {
         alert('주중 하루 이상 영업하여야 합니다.');
         return false;
     }
     for (let i = 0; i < dayEn.length; i++) {
-        if (addForm['opSun'].checked && (addForm['opSun'].value === '' || addForm['closeSun'].value === '')) {
-            alert('일요일 영업 시간을 선택해 주세요.');
+        if (addForm[`op${dayEn[i]}`].checked && (addForm[`open${dayEn[i]}`].value === '' || addForm[`close${dayEn[i]}`].value === '')) {
+            alert(`${dayKo[i]}요일 영업 시간을 선택해 주세요.`);
             return false;
         }
     }
+    const xhr = new XMLHttpRequest();
+    const formData = new FormData();
+    const time= {};
+    for (const day of dayEn){
+        const operates = addForm[`op${day}`].checked; //영업 여부를 input 체크 여부로 판단
+        const open = addForm[`open${day}`].value; //오픈 시간
+        const close = addForm[`close${day}`].value //마감 시간
+        time[day] = {
+            'operates' : operates,
+            'open' : open,
+            'close' : close
+        };
+        /*
+        * Mon: {
+        *    operates: true,
+        *    open : '09:30',
+        *    close : '22:00'
+        * } 꼴의 형식이 됨
+        *  */
+    }
+    formData.append('name',addForm['name'].value);
+    formData.append('contactFirst',addForm['contactFirst'].value);
+    formData.append('contactSecond',addForm['contactSecond'].value);
+    formData.append('contactThird',addForm['contactThird'].value);
+    formData.append('description',addForm['description'].value);
+    formData.append('latitude',addForm['lat'].value);
+    formData.append('longitude',addForm['lng'].value);
+    formData.append('addressPrimary',addForm['addressPrimary'].value);
+    formData.append('addressSecondary',addForm['addressSecondary'].value);
+    formData.append('thumbnailMultipart',addForm['thumbnail'].files[0]);
+    formData.append('time',JSON.stringify(time));
+// JSON.stringify(x) 는 전달된 배열 혹은 오브젝트인 x를 문자열인 JSON으로 바꾸어줌. (JSON.parse 랑 반대임)
+
+    xhr.open('POST', '/place/');
+    xhr.onreadystatechange = () => {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+            if (xhr.status >= 200 && xhr.status < 300) {
+                if (xhr.responseText ==='true'){
+                    alert('굿');
+                } else {
+                    alert('낫 굿');
+                }
+            } else {
+                alert('서버와 통신을 실패하였습니다');
+            }
+        }
+    };
+    xhr.send(formData);
 };
+
+
 
 if (addMatzip) {
     addMatzip.onclick = function () {
