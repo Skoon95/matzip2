@@ -2,6 +2,8 @@ const listElement = document.getElementById('list');
 listElement.addressGu = listElement.querySelector('[rel="addressGu"]');
 listElement.addressDong = listElement.querySelector('[rel="addressDong"]');
 
+// const addForm= document.getElementById('addForm');
+
 const loadingElement = document.getElementById('loading');
 const coverElement = document.getElementById('cover');
 coverElement.show = (f) => {

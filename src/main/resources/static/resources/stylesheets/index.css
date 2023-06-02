@@ -300,6 +300,9 @@ body {
 #addForm > .box.thumbnail > .preview {
     aspect-ratio: 1/1;
     background-color: #fafafa;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
     border: 0.0625rem solid #e0e0e0;
     border-radius: 0.25rem;
     cursor: pointer;
@@ -310,6 +313,7 @@ body {
     flex-direction: column;
     justify-content: center;
 }
+
 
 #addForm > .box.thumbnail > .preview > .empty {
     display: none;

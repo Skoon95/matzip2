@@ -11,12 +11,24 @@ mapElement.init = (params) => {
             latitude: center.Ma,
             longitude: center.La,
             level: mapElement.object.getLevel()
+
         });
+
         mapElement.geocoder.coord2Address(center.La, center.Ma, (result, status) => {
-            if (status === kakao.maps.services.Status.OK) {
+            if (status !== kakao.maps.services.Status.OK) {
+                addForm['addressPrimary'].valu='';
+                addForm['lat'].value = '';
+                addForm['lng'].value = '';
+            return;
+            }
                 listElement.addressGu.innerText = result[0]['address']['region_2depth_name'];
                 listElement.addressDong.innerText = result[0]['address']['region_3depth_name'];
+            if (addForm.classList.contains('visible')){
+                addForm['addressPrimary'].value = result[0]['address']['address_name'];
+                addForm['lat'].value = center.Ma;
+                addForm['lng'].value = center.La;
             }
+
         });
     }));
 };
