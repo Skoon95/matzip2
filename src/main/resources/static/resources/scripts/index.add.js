@@ -156,9 +156,9 @@ addForm.onsubmit = function (e) {
         if (xhr.readyState === XMLHttpRequest.DONE) {
             if (xhr.status >= 200 && xhr.status < 300) {
                 if (xhr.responseText ==='true'){
-                    alert('굿');
+                    alert('맛 집을 추가하였습니다');
                 } else {
-                    alert('낫 굿');
+                    alert('맛 집을 추가하는 도중 알 수 없는 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.');
                 }
             } else {
                 alert('서버와 통신을 실패하였습니다');

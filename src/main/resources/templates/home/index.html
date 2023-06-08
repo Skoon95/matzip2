@@ -15,6 +15,7 @@
     <script defer th:src="@{/resources/scripts/index.recover.js}"></script>
     <script defer th:src="@{/resources/scripts/index.register.js}"></script>
     <script defer th:src="@{/resources/scripts/index.js}"></script>
+    <script defer th:src="@{/resources/scripts/index.place.js}"></script>
 </head>
 <body>
 <div id="loading" class="visible">
@@ -413,7 +414,7 @@
         <span class="text gu" rel="addressGu">중구</span>
         <span class="text dong" rel="addressDong">성내1동</span>
     </div>
-    <ul class="list">
+    <ul class="list" id="placeList">
         <ul class="control" th:if="${session.user != null}">
             <li class="item" id="addMatzip">추가</li>
         </ul>

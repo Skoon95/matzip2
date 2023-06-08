@@ -16,9 +16,15 @@ public class PlaceService {
         this.placeMapper = placeMapper;
     }
 
+
+    public PlaceEntity[] getPlaces(double minLat, double minLng, double maxLat, double maxLng){
+        return this.placeMapper.selectPlacesInRangNoThumbnail(minLat,minLng,maxLat,maxLng);
+    }
     public boolean putPlace(PlaceEntity place){
         place.setRegisteredAt(new Date())
                 .setDeleted(false);
         return this.placeMapper.insertPlace(place)>0;
     }
+
+
 }

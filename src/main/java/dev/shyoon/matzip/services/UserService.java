@@ -39,7 +39,8 @@ public class UserService {
     public SendRegisterContactCodeResult sendRegisterContactCode(RegisterContactCodeEntity registerContactCode) {
         if (registerContactCode == null
                 || registerContactCode.getContact() == null
-                || !registerContactCode.getContact().matches("^(010)(\\d{8})$")) {
+                || !registerContactCode.getContact().matches("^(" +
+                ")(\\d{8})$")) {
             return SendRegisterContactCodeResult.FAILURE;
         }
         if (this.userMapper.selectUserByContact(registerContactCode.getContact()) != null) {

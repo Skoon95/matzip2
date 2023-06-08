@@ -6,6 +6,8 @@ mapElement.init = (params) => {
         level: params.level
     });
     ['dragend', 'zoom_changed'].forEach(event => kakao.maps.event.addListener(mapElement.object, event, () => {
+        loadPlaces();
+
         const center = mapElement.object.getCenter();
         mapElement.savePosition({
             latitude: center.Ma,

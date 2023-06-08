@@ -22,6 +22,19 @@ public class PlaceController {
     }
 
     @RequestMapping(value = "/",
+    method = RequestMethod.GET,
+    produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public PlaceEntity[] getIndex(@RequestParam(value = "minLat")double minLat,
+                                  @RequestParam(value = "minLng")double minLng,
+                                  @RequestParam(value = "maxLat")double maxLat,
+                                  @RequestParam(value = "maxLng")double maxLng){
+
+        return this.placeService.getPlaces(minLat,minLng,maxLat,maxLng);
+    }
+
+
+    @RequestMapping(value = "/",
     method = RequestMethod.POST,
     produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
