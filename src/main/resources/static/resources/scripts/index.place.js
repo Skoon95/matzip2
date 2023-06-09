@@ -1,14 +1,14 @@
 const placeList = document.getElementById('placeList');
 
 //  마커를 지우기 위해서는 마커를 기억하고 있어야 한다.
-let placeMakers=[];
+let placeMakers = [];
 
 
 function loadPlaces() {
 //      이 함수를 index.map.js에 호출해야한다.
 
-    function createListItem(place){
-        const htmlText=
+    function createListItem(place) {
+        const htmlText =
             //  용점반점 만들어 놓은 것  전체 문자열이다 이것을 html바꾸는 작업이 필요하다.
             `
     <li class="item">
@@ -39,15 +39,10 @@ function loadPlaces() {
         const listItem = dom.querySelector('li');
         return listItem;
 
-        //  선생님 ㅎ작업
+        //  선생님 작업
         //      return new DOMParser().parseFromString(htmlText, 'text/html').quertSelector('li');
 
     }
-
-
-
-
-
 
 
 //     서남 동북 위경도 이상 이하로 가지고 와야한다.
@@ -61,8 +56,8 @@ function loadPlaces() {
     const xhr = new XMLHttpRequest();
     xhr.open('GET', `/place/?minLat=${sw.Ma}&minLng=${sw.La}&maxLat=${ne.Ma}&maxLng=${ne.La}`);
     xhr.onreadystatechange = () => {
-        if(xhr.readyState === XMLHttpRequest.DONE){
-            if(xhr.status >=200 && xhr.status<300){
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+            if (xhr.status >= 200 && xhr.status < 300) {
 
                 // const incomingPlaces = JSON.parse(xhr.responseText);
                 // for(const oldPlace of places){
@@ -75,36 +70,81 @@ function loadPlaces() {
                 placeList.querySelectorAll(':scope>.item').forEach(item => item.remove());
 
                 //  마커 지우는것
-                for(const placeMaker of placeMakers){
+                for (const placeMaker of placeMakers) {
                     placeMaker.setMap(null);
                 }
-                placeMakers= []; //재할당하는것이다.
+                placeMakers = []; //재할당하는것이다.
 
                 // 마커 생성
-                const places= JSON.parse(xhr.responseText);
-                for(const place of places){
+                const places = JSON.parse(xhr.responseText);
+                for (const place of places) {
 
                     const listItem = createListItem(place);
+                    listItem.onclick = function () {
+                        detail.show(place); //디테일 불러오기
+                    }
                     placeList.append(listItem);
 
                     const position = new kakao.maps.LatLng(place['latitude'], place['longitude']);
                     const marker = new kakao.maps.Marker({
                         'position': position
                     });
+                    kakao.maps.event.addListener(marker, 'click', function () {
+                        detail.show(place);
+                    });
                     // 화면에다가 찍어야하닌깐
                     marker.setMap(mapElement.object);
                     placeMakers.push(marker);
                 }
 
-            }else{
+            } else {
 
 
             }
         }
     };
     xhr.send();
-
-
-
-
 }
+
+
+const detail = document.getElementById('detail');
+detail.thumbnail = detail.querySelector('[rel="thumbnail"]');
+detail.name = detail.querySelector('[rel="name"]');
+detail.contact = detail.querySelector('[rel="contact"]');
+detail.address = detail.querySelector('[rel="address"]');
+detail.description = detail.querySelector('[rel="description"]');
+detail.time = detail.querySelector('[rel="time"]');
+
+const detailClose = document.getElementById('detailClose');
+
+detail.show = function (place) {
+    detail.thumbnail.setAttribute('src', `/place/thumbnail?index=${place['index']}`);
+    detail.name.innerText = place['name'];
+    detail.contact.innerText = `${place['contactFirst']}-${place['contactSecond']}-${place['contactThird']}`;
+    detail.address.innerText = `${place['addressPrimary']} ${place['addressSecondary']}`;
+    detail.description.innerText = place['description'];
+
+    const daysEn = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    const daysKo = ['일', '월', '화', '수', '목', '금', '토'];
+    for (const day of daysEn) {
+        const dayObject = JSON.parse(place['time'])[day];
+        const tr = detail.time.querySelector(`[data-day="${day}"]`);
+        if (dayObject['operates'] === true) {
+            tr.classList.remove('off');
+            tr.innerHTML = `
+            <th>${daysKo[daysEn.indexOf(day)]}</th>
+            <td>${dayObject['open']}</td>
+            <td>${dayObject['close']}</td>
+             `;
+        } else {
+            tr.classList.add('off');
+            tr.innerHTML = `<th>${daysKo[daysEn.indexOf(day)]}</th><td colspan="2">휴업</td>`;
+        }
+    }
+
+    detail.classList.add('visible');
+}
+
+detailClose.onclick = function () {
+    detail.hide();
+};

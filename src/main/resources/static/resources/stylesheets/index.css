@@ -1019,6 +1019,192 @@ body {
     z-index: 999998;
 }
 
+#detail {
+    width: 0;
+    border-right: 0.0625rem solid #eeeeee;
+    opacity: 0;
+    overflow-x: hidden;
+    pointer-events: none;
+    position: relative;
+    transition-duration: 250ms;
+    transition-property: width, opacity;
+    transition-timing-function: ease;
+
+    align-items: stretch;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+#detail.visible{
+    width: 20rem;
+    opacity: 1;
+    pointer-events: all;
+}
+
+#detail > .thumbnail{
+    margin-bottom: 1rem;
+    object-fit: cover;
+    object-position: center;
+}
+
+#detail >.head{
+    border-bottom: 0.425rem solid #f0f0f0;
+
+
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+#detail > .head > .name{
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+}
+#detail > .head > .rating-container{
+    font-size: 0.9rem;
+
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+#detail > .head > .rating-container{
+    font-size: 0.9rem;
+}
+#detail > .head > .rating-container > *+*{
+    margin-left: 0.125rem;
+}
+
+#detail > .head > .rating-container > i {
+    top: 0.125rem;
+    color: #f0606a;
+    font-size: 0.8rem;
+    position: relative;
+}
+#detail > .head > .rating-container > .rating{
+    font-weight: 600;
+}
+
+#detail > .head > .menu {
+    align-self: stretch;
+    border-top: 0.0625rem solid #eeeeee;
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-rows: 1fr;
+    margin-top: 1rem;
+}
+
+#detail > .head > .menu >.item{
+    color: #606060;
+    cursor: pointer;
+    font-size: 0.9rem;
+    padding: 0.875rem;
+    user-select: none;
+
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#detail > .head > .menu >.item:hover{
+    color: #0288d1;
+}
+
+#detail > .head > .menu >.item + .item{
+    border-left: 0.0625rem solid #eeeeee;
+}
+
+#detail > .head > .menu > .item >i{
+    margin-bottom: 0.25rem;
+}
+
+#detail > .body{
+    border-bottom: 0.425rem solid #f0f0f0;
+
+    align-items: stretch;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+#detail > .body > .item{
+    padding: 0.625rem 1rem;
+
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+#detail > .body > .item + .item{
+    border-top: 0.0625rem solid #eeeeee;
+}
+
+#detail > .body > .item >i{
+    color: #a0a0a0;
+    font-size: 0.9rem;
+    margin-right: 0.75rem;
+}
+
+#detail > .time{
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+#detail > .time th{
+    font-weight: unset;
+}
+
+#detail > .time td,
+#detail > .time th{
+    padding: 0.375rem 1rem;
+    text-align: center;
+}
+
+#detail > .time > tbody > tr >th{
+    width: 1rem;
+}
+
+#detail > .time > tbody > tr.sun >th{
+    color: #ef5350;
+    font-weight: 600;
+}
+#detail > .time > tbody > tr.sat >th{
+    color: #0288d1;
+    font-weight: 600;
+}
+
+#detail > .time > tbody > tr.off >td{
+    color: #a0a0a0;
+    font-style: italic;
+}
+
+#detail > .time > tbody > tr >td,
+#detail > .time > tbody > tr > .th{
+    border-top: 0.0625rem solid #eeeeee;
+}
+
+#detailClose{
+    top: 0;
+    right: 0;
+    width: 3rem;
+    height: 3rem;
+    background-color: #00000060;
+    background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAACXBIWXMAAAsTAAALEwEAmpwYAAABBUlEQVR4nO3ZTQqDMBCGYU/RSq9Yj1uwPc1bRBcirWicv4T5Vm6UeVCTGdJ1mUwm00yAJ9AHqKOfaim9eWDO6IlhRkw1TBlKHnADXssDPsBDpdL9Gu6rGt7FNXhikEJ4YpBGeGDQQlhi0EZYYMwQmhhzhAbGDSGJcUdIYMIgrmDCIUowYRFnMOERRzDVIPYw1SH+zBDj5tp9ULvyZup6E+tsPiezEUA0TXxa/PixI4zNp7K3OlWD4cASGx7DiX0iLIaCzS4chgs7dhgMAm2HOwbB3skNg0IDaI5BsYs1w2DQiqONsZwn0MJ4DEVIYzwnO6QwEcZTJDDNHL01cxiayWQyXcR8AfkY5euVO0c7AAAAAElFTkSuQmCC");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 70%;
+    cursor: pointer;
+    position: absolute;
+    z-index: 1;
+}
+
+
 @keyframes cover-logo-animation {
     0% {
         transform: rotate(0deg);

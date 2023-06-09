@@ -50,4 +50,26 @@
           AND `longitude` >= #{minLng}
           AND `longitude` <= #{maxLng}
         ]]></select>
+    <select id="selectPlaceByIndex"
+            resultType="dev.shyoon.matzip.entities.PlaceEntity">
+        SELECT `index`             AS `index`,
+               `name`              AS `name`,
+               `contact_first`     AS `contactFirst`,
+               `contact_second`    AS `contactSecond`,
+               `contact_third`     AS `contactThird`,
+               `description`       AS `description`,
+               `latitude`          AS `latitude`,
+               `longitude`         AS `longitude`,
+               `address_primary`   AS `addressPrimary`,
+               `address_secondary` AS `addressSecondary`,
+               `thumbnail`         AS `thumbnail`,
+               `thumbnail_mime`    AS `thumbnailMime`,
+               `time`              AS `time`,
+               `registered_by`     AS `registeredBy`,
+               `registered_at`     AS `registeredAt`,
+               `deleted_flag`      AS `isDeleted`
+        FROM `matzip`.`places`
+        WHERE `index` = #{index}
+        LIMIT 1
+    </select>
 </mapper>

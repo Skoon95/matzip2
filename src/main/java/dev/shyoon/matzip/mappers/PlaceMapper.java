@@ -8,8 +8,12 @@ import org.apache.ibatis.annotations.Param;
 public interface PlaceMapper {
     int insertPlace(PlaceEntity place);
 
+
+    PlaceEntity selectPlaceByIndex(@Param(value = "index")int index);
+
     PlaceEntity[] selectPlacesInRangNoThumbnail(@Param(value = "minLat")double minLat,
                                                @Param(value = "minLng")double minLng,
                                                @Param(value = "maxLat")double maxLat,
                                                @Param(value = "maxLng")double maxLng);
+
 }

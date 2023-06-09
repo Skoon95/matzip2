@@ -26,5 +26,8 @@ public class PlaceService {
         return this.placeMapper.insertPlace(place)>0;
     }
 
+    public PlaceEntity getPlace(int index){
+        return this.placeMapper.selectPlaceByIndex(index);
+    }
 
 }

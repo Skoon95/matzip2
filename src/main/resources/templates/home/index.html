@@ -2,12 +2,14 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>맛을 담다 - 맛집</title>
     <link rel="stylesheet" th:href="@{/resources/stylesheets/index.css}">
     <link rel="shortcut icon" th:href="@{/resources/images/shortcut_icon.png}">
     <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=3548a11ff0aa203fb300e1a908d69de3&libraries=services,clusterer,drawing"></script>
+    <script src="https://kit.fontawesome.com/552f19feec.js" crossorigin="anonymous"></script>
     <script defer th:src="@{/resources/scripts/common.js}"></script>
     <script defer th:src="@{/resources/scripts/index.add.js}"></script>
     <script defer th:src="@{/resources/scripts/index.login.js}"></script>
@@ -16,6 +18,7 @@
     <script defer th:src="@{/resources/scripts/index.register.js}"></script>
     <script defer th:src="@{/resources/scripts/index.js}"></script>
     <script defer th:src="@{/resources/scripts/index.place.js}"></script>
+
 </head>
 <body>
 <div id="loading" class="visible">
@@ -94,14 +97,16 @@
             </label>
             <span class="warning email" rel="emailWarning"></span>
             <label class="label">
-                <input class="_object-input" maxlength="50" name="password" placeholder="비밀번호 (8자 이상 50자 이하)" type="password">
+                <input class="_object-input" maxlength="50" name="password" placeholder="비밀번호 (8자 이상 50자 이하)"
+                       type="password">
             </label>
             <label class="label">
                 <input class="_object-input" maxlength="50" name="passwordCheck" placeholder="비밀번호 확인" type="password">
             </label>
             <span class="warning password" rel="passwordWarning"></span>
             <label class="label">
-                <input class="_object-input" maxlength="10" name="nickname" placeholder="별명 (2자 이상 10자 이하 완성 한글)" type="text">
+                <input class="_object-input" maxlength="10" name="nickname" placeholder="별명 (2자 이상 10자 이하 완성 한글)"
+                       type="text">
             </label>
             <span class="warning nickname" rel="nicknameWarning"></span>
             <label class="label">
@@ -125,7 +130,9 @@
             <h2 class="title">회원가입</h2>
             <h3 class="subtitle">회원가입 완료</h3>
         </div>
-        <div class="content-container">입력하신 이메일로 계정 인증을 위한 링크가 담긴 메일을 전송하였습니다. 이메일 인증을 완료한 후 로그인 및 서비스 이용이 가능합니다.<br><br>전송된 링크는 1시간 동안 유효함으로 유의해주시기 바랍니다.</div>
+        <div class="content-container">입력하신 이메일로 계정 인증을 위한 링크가 담긴 메일을 전송하였습니다. 이메일 인증을 완료한 후 로그인 및 서비스 이용이
+            가능합니다.<br><br>전송된 링크는 1시간 동안 유효함으로 유의해주시기 바랍니다.
+        </div>
         <div class="button-container">
             <input class="_object-button _color-concept" type="submit" value="완료">
         </div>
@@ -211,7 +218,8 @@
         <div class="address-container">
             <span class="message">기본 주소는 자동으로 완성됩니다.</span>
             <label class="label">
-                <input readonly class="_object-input" maxlength="100" name="addressPrimary" placeholder="기본 주소" type="text">
+                <input readonly class="_object-input" maxlength="100" name="addressPrimary" placeholder="기본 주소"
+                       type="text">
             </label>
             <label class="label">
                 <input class="_object-input" maxlength="100" name="addressSecondary" placeholder="상세 주소" type="text">
@@ -433,7 +441,8 @@
                 </div>
             </div>
             <div class="image-container">
-                <img alt="" class="image" src="https://mblogthumb-phinf.pstatic.net/MjAxODEyMDhfMTc0/MDAxNTQ0MjM4MTQ5MDQ2.AMnM0wh58PwdAPC4Wk5k1IGlBD6eH1loUgSRorMiFl0g.eHQmfl0gLlfiN4i-FjfA8XJI2aldGUaImxlAaYyyxi8g.JPEG.engh1698/2018-12-06-12-50-32.jpg?type=w800">
+                <img alt="" class="image"
+                     src="https://mblogthumb-phinf.pstatic.net/MjAxODEyMDhfMTc0/MDAxNTQ0MjM4MTQ5MDQ2.AMnM0wh58PwdAPC4Wk5k1IGlBD6eH1loUgSRorMiFl0g.eHQmfl0gLlfiN4i-FjfA8XJI2aldGUaImxlAaYyyxi8g.JPEG.engh1698/2018-12-06-12-50-32.jpg?type=w800">
                 <span class="count">4</span>
             </div>
         </li>
@@ -452,7 +461,8 @@
                 </div>
             </div>
             <div class="image-container">
-                <img alt="" class="image" src="https://mblogthumb-phinf.pstatic.net/MjAxODEyMDhfMTc0/MDAxNTQ0MjM4MTQ5MDQ2.AMnM0wh58PwdAPC4Wk5k1IGlBD6eH1loUgSRorMiFl0g.eHQmfl0gLlfiN4i-FjfA8XJI2aldGUaImxlAaYyyxi8g.JPEG.engh1698/2018-12-06-12-50-32.jpg?type=w800">
+                <img alt="" class="image"
+                     src="https://mblogthumb-phinf.pstatic.net/MjAxODEyMDhfMTc0/MDAxNTQ0MjM4MTQ5MDQ2.AMnM0wh58PwdAPC4Wk5k1IGlBD6eH1loUgSRorMiFl0g.eHQmfl0gLlfiN4i-FjfA8XJI2aldGUaImxlAaYyyxi8g.JPEG.engh1698/2018-12-06-12-50-32.jpg?type=w800">
                 <span class="count">4</span>
             </div>
         </li>
@@ -471,7 +481,8 @@
                 </div>
             </div>
             <div class="image-container">
-                <img alt="" class="image" src="https://mblogthumb-phinf.pstatic.net/MjAxODEyMDhfMTc0/MDAxNTQ0MjM4MTQ5MDQ2.AMnM0wh58PwdAPC4Wk5k1IGlBD6eH1loUgSRorMiFl0g.eHQmfl0gLlfiN4i-FjfA8XJI2aldGUaImxlAaYyyxi8g.JPEG.engh1698/2018-12-06-12-50-32.jpg?type=w800">
+                <img alt="" class="image"
+                     src="https://mblogthumb-phinf.pstatic.net/MjAxODEyMDhfMTc0/MDAxNTQ0MjM4MTQ5MDQ2.AMnM0wh58PwdAPC4Wk5k1IGlBD6eH1loUgSRorMiFl0g.eHQmfl0gLlfiN4i-FjfA8XJI2aldGUaImxlAaYyyxi8g.JPEG.engh1698/2018-12-06-12-50-32.jpg?type=w800">
                 <span class="count">4</span>
             </div>
         </li>
@@ -490,7 +501,8 @@
                 </div>
             </div>
             <div class="image-container">
-                <img alt="" class="image" src="https://mblogthumb-phinf.pstatic.net/MjAxODEyMDhfMTc0/MDAxNTQ0MjM4MTQ5MDQ2.AMnM0wh58PwdAPC4Wk5k1IGlBD6eH1loUgSRorMiFl0g.eHQmfl0gLlfiN4i-FjfA8XJI2aldGUaImxlAaYyyxi8g.JPEG.engh1698/2018-12-06-12-50-32.jpg?type=w800">
+                <img alt="" class="image"
+                     src="https://mblogthumb-phinf.pstatic.net/MjAxODEyMDhfMTc0/MDAxNTQ0MjM4MTQ5MDQ2.AMnM0wh58PwdAPC4Wk5k1IGlBD6eH1loUgSRorMiFl0g.eHQmfl0gLlfiN4i-FjfA8XJI2aldGUaImxlAaYyyxi8g.JPEG.engh1698/2018-12-06-12-50-32.jpg?type=w800">
                 <span class="count">4</span>
             </div>
         </li>
@@ -509,7 +521,8 @@
                 </div>
             </div>
             <div class="image-container">
-                <img alt="" class="image" src="https://mblogthumb-phinf.pstatic.net/MjAxODEyMDhfMTc0/MDAxNTQ0MjM4MTQ5MDQ2.AMnM0wh58PwdAPC4Wk5k1IGlBD6eH1loUgSRorMiFl0g.eHQmfl0gLlfiN4i-FjfA8XJI2aldGUaImxlAaYyyxi8g.JPEG.engh1698/2018-12-06-12-50-32.jpg?type=w800">
+                <img alt="" class="image"
+                     src="https://mblogthumb-phinf.pstatic.net/MjAxODEyMDhfMTc0/MDAxNTQ0MjM4MTQ5MDQ2.AMnM0wh58PwdAPC4Wk5k1IGlBD6eH1loUgSRorMiFl0g.eHQmfl0gLlfiN4i-FjfA8XJI2aldGUaImxlAaYyyxi8g.JPEG.engh1698/2018-12-06-12-50-32.jpg?type=w800">
                 <span class="count">4</span>
             </div>
         </li>
@@ -528,13 +541,94 @@
                 </div>
             </div>
             <div class="image-container">
-                <img alt="" class="image" src="https://mblogthumb-phinf.pstatic.net/MjAxODEyMDhfMTc0/MDAxNTQ0MjM4MTQ5MDQ2.AMnM0wh58PwdAPC4Wk5k1IGlBD6eH1loUgSRorMiFl0g.eHQmfl0gLlfiN4i-FjfA8XJI2aldGUaImxlAaYyyxi8g.JPEG.engh1698/2018-12-06-12-50-32.jpg?type=w800">
+                <img alt="" class="image"
+                     src="https://mblogthumb-phinf.pstatic.net/MjAxODEyMDhfMTc0/MDAxNTQ0MjM4MTQ5MDQ2.AMnM0wh58PwdAPC4Wk5k1IGlBD6eH1loUgSRorMiFl0g.eHQmfl0gLlfiN4i-FjfA8XJI2aldGUaImxlAaYyyxi8g.JPEG.engh1698/2018-12-06-12-50-32.jpg?type=w800">
                 <span class="count">4</span>
             </div>
         </li>
     </ul>
 </section>
-<section id="detail">디테일 자리</section>
+<section id="detail" class="visible">
+    <div class="close" id="detailClose"></div>
+        <img alt="" class="thumbnail" src="https://mblogthumb-phinf.pstatic.net/MjAxODEyMDhfMTc0/MDAxNTQ0MjM4MTQ5MDQ2.AMnM0wh58PwdAPC4Wk5k1IGlBD6eH1loUgSRorMiFl0g.eHQmfl0gLlfiN4i-FjfA8XJI2aldGUaImxlAaYyyxi8g.JPEG.engh1698/2018-12-06-12-50-32.jpg?type=w800" rel="thumbnail">
+    <div class="head">
+        <span class="name" rel="name">용정반점</span>
+        <span class="rating-container">
+            <i class="fa-solid fa-star"></i>
+            <span class="rating">4.65</span>
+            <span class="full">/5</span>
+        </span>
+        <ul class="menu">
+            <li class="item">
+                <i class="fa-regular fa-bookmark"></i>
+                <span class="text">저장</span>
+            </li>
+            <li class="item">
+                <i class="fa-regular fa-heart"></i>
+                <span class="text">좋아요</span>
+            </li>
+        </ul>
+    </div>
+    <ul class="body">
+        <li class="item">
+            <i class="fa-solid fa-phone"></i>
+            <span class="text" rel="contact">053-1234-5678</span>
+        </li>
+        <li class="item">
+            <i class="fa-solid fa-location-dot"></i>
+            <span class="text" rel="address">대구광역시 중구 중앙대로 366 10층대구광역시 중구 중앙대로 366 10층대구광역시 중구 중앙대로 366 10층</span>
+        </li>
+        <li class="item">
+            <i class="fa-regular fa-file-lines"></i>
+            <span class="text" rel="description">어쩌고 저쩌고 맛있음</span>
+        </li>
+    </ul>
+    <table class="time" rel="time">
+        <thead>
+        <tr>
+            <th></th>
+            <th>오픈</th>
+            <th>마감</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="sun" data-day="Sun">
+            <th>일</th>
+            <td>09:00</td>
+            <td>22:00</td>
+        </tr>
+        <tr data-day="Mon">
+            <th>월</th>
+            <td>09:00</td>
+            <td>22:00</td>
+        </tr>
+        <tr data-day="Tue">
+            <th>화</th>
+            <td>09:00</td>
+            <td>22:00</td>
+        </tr>
+        <tr class="off" data-day="Wed">
+            <th>수</th>
+            <td colspan="2">휴업</td>
+        </tr>
+        <tr data-day="Thu">
+            <th>목</th>
+            <td>09:00</td>
+            <td>22:00</td>
+        </tr>
+        <tr data-day="Fri">
+            <th>금</th>
+            <td>09:00</td>
+            <td>22:00</td>
+        </tr>
+        <tr class="sat" data-day="Sat">
+            <th>토</th>
+            <td>09:00</td>
+            <td>22:00</td>
+        </tr>
+        </tbody>
+    </table>
+</section>
 <section id="map">
     <div rel="pin"></div>
     <div rel="pinEffect"></div>
