@@ -105,6 +105,7 @@ public class UserService {
             return RegisterResult.FAILURE;
         }
         user.setPassword(CryptoUtil.hashSha512(user.getPassword()));
+
         user.setStatus("EMAIL_PENDING");
         user.setAdmin(false);
 
